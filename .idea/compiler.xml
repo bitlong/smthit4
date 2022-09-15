@@ -6,8 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="smthit-3rd-dependencies" />
+        <module name="smthit4-micro-service" />
         <module name="smthit4-web" />
+        <module name="smthit4-common" />
+        <module name="smthit4-mybatis-plus" />
       </profile>
     </annotationProcessing>
   </component>

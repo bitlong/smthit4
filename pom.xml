@@ -11,6 +11,10 @@
     <modules>
         <module>smthit4-3rd-dependencies</module>
         <module>smthit4-web</module>
+        <module>smthit4-common</module>
+        <module>smthit4-micro-service</module>
+        <module>smthit4-mybatis-plus</module>
+        <module>smthit4-beetsql</module>
     </modules>
 
     <properties>

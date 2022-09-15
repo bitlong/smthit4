@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!--
     <parent>
@@ -11,7 +13,7 @@
     <groupId>cn.smthit.v4</groupId>
     <artifactId>smthit4</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>smthit4-web</module>
         <module>smthit4-common</module>
@@ -366,8 +368,7 @@
     <scm>
         <connection>scm:git:https://github.com/bitlong/smthit4.git</connection>
         <url>https://github.com/bitlong/smthit4</url>
-      <tag>smthit4-0.0.1</tag>
-  </scm>
+    </scm>
     <profiles>
         <profile>
             <id>release</id>

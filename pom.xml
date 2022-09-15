@@ -16,6 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>smthit-v4</name>
     <url>https://github.com/bitlong/smthit4</url>
+    <description>Spring SpringBoot Bootstrap</description>
     <modules>
         <module>smthit4-web</module>
         <module>smthit4-common</module>

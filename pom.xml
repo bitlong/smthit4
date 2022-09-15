@@ -15,6 +15,14 @@
         <module>smthit4-micro-service</module>
         <module>smthit4-mybatis-plus</module>
         <module>smthit4-beetsql</module>
+        <module>smthit4-zookeeper</module>
+        <module>smthit4-redis</module>
+        <module>smthit4-rabbitmq</module>
+        <module>smthit4-logger</module>
+        <module>smthit4-feign</module>
+        <module>smthit4-mongodb</module>
+        <module>smthit4-dubbo</module>
+        <module>smthit4-netty</module>
     </modules>
 
     <properties>

@@ -3,8 +3,8 @@
  */
 package cn.smthit.v4.eventbus.mq;
 
+import cn.smthit.v4.eventbus.mq.spi.IMQService;
 import com.google.common.base.Preconditions;
-import com.sgai.common.eventbus.mq.spi.IMQService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

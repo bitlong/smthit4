@@ -1,6 +1,7 @@
 package cn.smthit.v4.common.lang.validator;
 
-import com.sgai.common.lang.validator.hibernate.ValidatorKit;
+
+import cn.smthit.v4.common.lang.validator.hibernate.ValidatorKit;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.groups.Default;

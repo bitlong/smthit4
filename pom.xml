@@ -11,7 +11,7 @@
     <groupId>cn.smthit.v4</groupId>
     <artifactId>smthit4</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <modules>
         <module>smthit4-web</module>
         <module>smthit4-common</module>
@@ -366,7 +366,7 @@
     <scm>
         <connection>scm:git:https://github.com/bitlong/smthit4.git</connection>
         <url>https://github.com/bitlong/smthit4</url>
-      <tag>smthit4-0.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
     <profiles>
         <profile>

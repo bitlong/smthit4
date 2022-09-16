@@ -11,8 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum ErrorCode implements IEnumStatus<String> {
     DEFAULT_ERROR("500", "服务器内部错误"),
     OBJECT_NOT_FOUND("COM-404", "对象不存在"),
+    CLASS_NOT_FOUND("COM-405", "类不存在"),
     ASSERT_FAILED("COM-400", "数据验证失败"),
-    DATA_PARSE_ERROR("COM-1000", "数据解析失败");;
+    DATA_PARSE_ERROR("COM-1000", "数据解析失败");
 
     private String value;
     private String desc;

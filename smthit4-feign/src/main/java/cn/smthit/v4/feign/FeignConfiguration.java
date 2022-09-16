@@ -1,7 +1,8 @@
 package cn.smthit.v4.feign;
 
-import cn.smthit.v4.feign.exception.ExceptionHandle;
+import cn.smthit.v4.feign.exception.FeiginExceptionHandler;
 import feign.RequestInterceptor;
+import feign.Retryer;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,11 @@ import java.util.List;
 public class FeignConfiguration implements WebMvcConfigurer {
 
     @Bean
+    public Retryer feignRetryer() {
+        return new Retryer.Default();
+    }
+
+    @Bean
     public RequestInterceptor exceptionRequestInterceptor() {
         return new ExceptionRequestInterceptor();
     }
@@ -30,7 +36,7 @@ public class FeignConfiguration implements WebMvcConfigurer {
 
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-        ExceptionHandle exceptionHandle = new ExceptionHandle();
+        FeiginExceptionHandler exceptionHandle = new FeiginExceptionHandler();
         exceptionHandle.setOrder(1);
         resolvers.add(exceptionHandle);
     }

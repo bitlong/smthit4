@@ -13,6 +13,5 @@ public class ExceptionRequestInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
         //异常序列化
         requestTemplate.header(FeignConstants.FEIGN_REQUEST_HEADER, FeignConstants.FEIGN_REQUEST_HEADER_VALUE);
-
     }
 }

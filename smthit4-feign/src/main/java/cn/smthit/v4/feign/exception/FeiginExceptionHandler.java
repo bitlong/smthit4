@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -27,10 +26,10 @@ import java.nio.charset.StandardCharsets;
  * @date: 2022/9/16  11:59
  */
 @Slf4j
-public class ExceptionHandle implements HandlerExceptionResolver, Ordered {
+public class FeiginExceptionHandler implements HandlerExceptionResolver, Ordered {
     @Setter
-    private int order = Ordered.LOWEST_PRECEDENCE;
 
+    private int order = Ordered.LOWEST_PRECEDENCE;
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
         log.warn(String.format("信息信息: %s", exp.getMessage()), exp);

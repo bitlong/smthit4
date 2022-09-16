@@ -1,6 +1,7 @@
 package cn.smthit.v4.common.lang.exception;
 
 import cn.smthit.v4.common.lang.enums.EnumStatus;
+import cn.smthit.v4.common.lang.enums.IEnumStatus;
 import lombok.experimental.Accessors;
 
 import java.lang.reflect.Constructor;
@@ -13,27 +14,32 @@ import java.lang.reflect.Constructor;
 @Accessors(chain = true)
 public class ErrorBuilder {
 
-    private EnumStatus<String> code;
+    private IEnumStatus<String> code;
     private String detailMessage;
 
    public  static ErrorBuilder builder() {
         return new ErrorBuilder();
     }
 
-    public ErrorBuilder setCode(EnumStatus<String> code) {
+    public ErrorBuilder setCode(IEnumStatus<String> code) {
         this.code = code;
         return this;
     }
 
-    public ErrorBuilder setMessage(String message, Object...args) {
+    public ErrorBuilder appendDetailMessage(String message, Object...args) {
         String formattedMsg = String.format(message, args);
-        if(message != null) {
-            message = message + ", " + formattedMsg;
+        if(detailMessage != null) {
+            this.detailMessage += ", " + formattedMsg;
         } else {
-            message = formattedMsg;
+            this.detailMessage = formattedMsg;
         }
-
         return this;
+    }
+
+    public ErrorBuilder setDetailMessage(String detailMessage, Object...args) {
+       String formattedMsg = String.format(detailMessage, args);
+       this.detailMessage = formattedMsg;
+       return this;
     }
 
     public <T extends ServiceException> T build(Class<T> cls) {

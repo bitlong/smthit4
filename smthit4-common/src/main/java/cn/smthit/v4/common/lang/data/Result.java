@@ -2,6 +2,10 @@ package cn.smthit.v4.common.lang.data;
 
 import cn.smthit.v4.common.lang.enums.IEnumStatus;
 import cn.smthit.v4.common.lang.exception.ServiceException;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -10,6 +14,8 @@ import java.io.Serializable;
  * @author: Bean
  * @date: 2022/9/16  10:39
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString
 public class Result<T> implements Serializable {
     public static final String OK = "ok";
     public static final String DEFAULT_ERROR = "500";

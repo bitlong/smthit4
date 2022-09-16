@@ -17,10 +17,12 @@ import java.util.List;
  */
 @Configuration
 public class FeignConfiguration implements WebMvcConfigurer {
+
     @Bean
     public RequestInterceptor exceptionRequestInterceptor() {
         return new ExceptionRequestInterceptor();
     }
+
     @Bean
     public ErrorDecoder feignErrorDecoder() {
         return new FeignExceptionErrorDecoder();

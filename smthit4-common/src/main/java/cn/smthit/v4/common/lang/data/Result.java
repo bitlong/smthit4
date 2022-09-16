@@ -69,8 +69,9 @@ public class Result<T> implements Serializable {
     public static <T> Result<T> failed(ServiceException exp) {
         Result result = new Result();
         result.success = false;
-        result.code = exp.getMessage();
+        result.code = exp.getCode();
         result.message = exp.getMessage();
+        result.detailMessage = exp.getDetailMessage();
         return result;
     }
 

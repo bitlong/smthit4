@@ -6,6 +6,7 @@ import feign.Retryer;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Configuration
 public class FeignConfiguration implements WebMvcConfigurer {
 
+    @Primary
     @Bean
     public Retryer feignRetryer() {
         return new Retryer.Default();

@@ -21,5 +21,6 @@ public class DataParseException extends ServiceException {
 		super(msg);
 		setCode(ErrorCode.DATA_PARSE_ERROR.getValue());
 		setMessage(ErrorCode.DATA_PARSE_ERROR.getDesc());
+		setDetailMessage(msg);
 	}
 }

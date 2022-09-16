@@ -14,5 +14,6 @@ public class ObjectNotFoundException extends ServiceException {
 		super("对象不存在.");
 		setCode(ErrorCode.OBJECT_NOT_FOUND.getValue());
 		setMessage(ErrorCode.OBJECT_NOT_FOUND.getDesc());
+		setDetailMessage(detailMessage);
 	}
 }

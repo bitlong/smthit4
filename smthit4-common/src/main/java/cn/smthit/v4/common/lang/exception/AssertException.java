@@ -17,5 +17,6 @@ public class AssertException extends ServiceException {
 		super(detailMessage);
 		setCode(ErrorCode.ASSERT_FAILED.getValue());
 		setMessage(ErrorCode.ASSERT_FAILED.getDesc());
+		setDetailMessage(detailMessage);
 	}
 }

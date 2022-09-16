@@ -11,5 +11,6 @@ public class ClassNotFoundException extends ServiceException {
         super(detailMessage);
         setCode(ErrorCode.DATA_PARSE_ERROR.getValue());
         setMessage(ErrorCode.DATA_PARSE_ERROR.getDesc());
+        setDetailMessage(detailMessage);
     }
 }

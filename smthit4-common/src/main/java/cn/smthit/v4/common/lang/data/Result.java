@@ -9,7 +9,7 @@ import cn.smthit.v4.common.lang.exception.ServiceException;
  * @date: 2022/9/16  10:39
  */
 public class Result<T> {
-    public static final String SUCCESS = "200";
+    public static final String OK = "ok";
     public static final String DEFAULT_ERROR = "500";
 
     private boolean success;
@@ -22,9 +22,20 @@ public class Result<T> {
     public static <T> Result<T> ok() {
         Result<T> result = new Result();
 
-        result.code = SUCCESS;
+        result.code = OK;
         result.success = true;
         result.message = "Success";
+
+        return result;
+    }
+
+    public static <T> Result<T> ok(T data) {
+        Result<T> result = new Result();
+
+        result.code = OK;
+        result.success = true;
+        result.message = "Success";
+        result.data = data;
 
         return result;
     }

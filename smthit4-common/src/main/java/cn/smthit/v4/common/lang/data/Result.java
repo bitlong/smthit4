@@ -4,6 +4,7 @@ import cn.smthit.v4.common.lang.enums.IEnumStatus;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -20,11 +21,16 @@ public class Result<T> implements Serializable {
     public static final String OK = "ok";
     public static final String DEFAULT_ERROR = "500";
 
+    @Getter
     private boolean success;
+    @Getter
     private String code;
+    @Getter
     private String message;
+    @Getter
     private String detailMessage;
 
+    @Getter
     private T data;
 
     public static <T> Result<T> ok() {

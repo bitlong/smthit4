@@ -1,14 +1,78 @@
 package cn.smthit.v4.common.lang.data;
 
+import cn.smthit.v4.common.lang.enums.IEnumStatus;
+import cn.smthit.v4.common.lang.exception.ServiceException;
+
 /**
  * @description: ...
  * @author: Bean
  * @date: 2022/9/16  10:39
  */
-public class Result {
+public class Result<T> {
+    public static final String SUCCESS = "200";
+    public static final String DEFAULT_ERROR = "500";
 
-    static Result ok() {
-        Result result = new Result();
+    private boolean success;
+    private String code;
+    private String message;
+    private String detailMessage;
+
+    private T data;
+
+    public static <T> Result<T> ok() {
+        Result<T> result = new Result();
+
+        result.code = SUCCESS;
+        result.success = true;
+        result.message = "Success";
+
         return result;
+    }
+
+    public Result<T> data(T data) {
+        this.data = data;
+        return this;
+    }
+
+    public static <T>  Result<T> failed() {
+        Result result = new Result();
+        result.code = DEFAULT_ERROR;
+        result.message = "Faided";
+        return result;
+    }
+
+    public static <T> Result<T> failed(ServiceException exp) {
+        Result result = new Result();
+        result.success = false;
+        result.code = exp.getMessage();
+        result.message = exp.getMessage();
+        return result;
+    }
+
+    public Result<T> error(IEnumStatus<String> error) {
+        this.code = error.getValue();
+        this.message = error.getDesc();
+        return this;
+    }
+
+    public Result<T> error(String code, String message) {
+        this.code = code;
+        this.message = message;
+        return this;
+    }
+
+    public Result<T> code(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public Result<T> message(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public Result<T> detailMessage(String detailMessage) {
+        this.detailMessage = detailMessage;
+        return this;
     }
 }

@@ -22,7 +22,7 @@ public class MethodLogAspect {
     private MethodLogListener listener;
     private UserContextParser userContextParser;
 
-    @Pointcut("@annotation(com.sgai.common.lang.log.MethodLogger)")
+    @Pointcut("@annotation(cn.smthit.v4.common.lang.log.MethodLogger)")
     public void methodLogger() {
     }
 

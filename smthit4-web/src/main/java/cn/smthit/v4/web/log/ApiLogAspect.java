@@ -38,7 +38,7 @@ public class ApiLogAspect {
     private ApiLogListenter listener;
     private UserWebContextParser userWebContextParser;
 
-    @Pointcut("@annotation(com.sgai.common.lang.log.ApiLogger)")
+    @Pointcut("@annotation(cn.smthit.v4.web.log.ApiLogger)")
     public void apiLogger() {}
 
     @Before("apiLogger()")

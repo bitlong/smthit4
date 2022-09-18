@@ -1,10 +1,9 @@
-package cn.smthit.v4.mybatis.plus;
+package cn.smthit.v4.mybatis.plus.ext;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
@@ -33,13 +32,7 @@ import java.util.stream.Collectors;
  * @date: 2022/8/12  19:30
  */
 public interface EntityMapper<T> extends BaseMapper<T> {
-
-    /**
-     * 获取当前的模型类
-     * //TODO 内部调用没有被代理，直接在BaseMapper中找对应的方法了
-     * @return
-     */
-    Class<?> currentModelClass();
+    Class<?> getMapperClass();
 
     default QueryWrapper<T> queryWrapper() {
         QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
@@ -77,8 +70,9 @@ public interface EntityMapper<T> extends BaseMapper<T> {
     }
 
     default String getSqlStatement(SqlMethod sqlMethod) {
-        return SqlHelper.getSqlStatement(EntityMapper.class, sqlMethod);
+        return SqlHelper.getSqlStatement(getMapperClass(), sqlMethod);
     }
+
 
     @Transactional(
             rollbackFor = {Exception.class}

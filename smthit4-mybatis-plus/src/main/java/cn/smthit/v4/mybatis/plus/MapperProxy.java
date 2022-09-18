@@ -3,7 +3,7 @@ package cn.smthit.v4.mybatis.plus;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-
+import cn.smthit.v4.mybatis.plus.ext.EntityMapper;
 /**
  * @description: ...
  * @author: Bean
@@ -24,6 +24,8 @@ public class MapperProxy<T> implements InvocationHandler {
         if(target == null) {
             throw new RuntimeException("找不到对应的Mapper, Mapper: " + cls.getName());
         }
+
+
         return method.invoke(target, args);
     }
 

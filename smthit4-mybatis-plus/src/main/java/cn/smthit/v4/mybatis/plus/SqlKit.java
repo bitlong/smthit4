@@ -2,6 +2,7 @@ package cn.smthit.v4.mybatis.plus;
 
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.SqlSessionTemplate;
+import cn.smthit.v4.mybatis.plus.ext.EntityMapper;
 
 /**
  * @description: ...
@@ -23,11 +24,12 @@ public class SqlKit {
             throw new RuntimeException("SqlKit还没有被正确的初始化...");
         }
 
-        return (EntityMapper<T>) mybatisConfigration.getMapper(cls, sqlSessionTemplate);
+        EntityMapper entityMapper = (EntityMapper<T>) mybatisConfigration.getMapper(cls, sqlSessionTemplate);
+
+        return entityMapper;
     }
 
     public static Object mapper(Class<?> cls) {
-        //return MapperProxy.getProxyMapper(cls);
         return CGMapperProxy.getProxyMapper(cls);
     }
 

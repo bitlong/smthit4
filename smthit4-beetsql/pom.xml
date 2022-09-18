@@ -6,12 +6,7 @@
         <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>smthit4-beetsql</artifactId>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
+    <name>smthit4-beetlsql</name>
+    <description>集成BeetlSQL, 最顺手好用的持久层</description>
 </project>

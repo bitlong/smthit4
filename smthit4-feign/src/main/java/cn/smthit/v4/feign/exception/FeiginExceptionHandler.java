@@ -30,6 +30,7 @@ public class FeiginExceptionHandler implements HandlerExceptionResolver, Ordered
     @Setter
 
     private int order = Ordered.LOWEST_PRECEDENCE;
+
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
         log.warn(String.format("信息信息: %s", exp.getMessage()), exp);

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * @description: ...
+ * @description: 设置公用字段的默认值
  * @author: Bean
  * @date: 2022/9/19  11:14
  */
@@ -17,13 +17,13 @@ public class DefaultMetaObjectHandler implements MetaObjectHandler {
         Object createdAt = this.getFieldValByName("created_at", metaObject);
         if (Objects.isNull(createdAt)) {
             // 填充
-            this.setFieldValByName("created_at",new Date(), metaObject);
+            this.setFieldValByName("created_at", new Date(), metaObject);
         }
 
         Object updatedAt = this.getFieldValByName("updated_at", metaObject);
         if (Objects.isNull(updatedAt)) {
             // 填充
-            this.setFieldValByName("updated_at",new Date(), metaObject);
+            this.setFieldValByName("updated_at", new Date(), metaObject);
         }
 
         Object status = this.getFieldValByName("status", metaObject);
@@ -36,9 +36,6 @@ public class DefaultMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         Object updatedAt = this.getFieldValByName("updated_at", metaObject);
-        if (Objects.isNull(updatedAt)) {
-            // 填充
-            this.setFieldValByName("updated_at",new Date(), metaObject);
-        }
+        this.setFieldValByName("updated_at",new Date(), metaObject);
     }
 }

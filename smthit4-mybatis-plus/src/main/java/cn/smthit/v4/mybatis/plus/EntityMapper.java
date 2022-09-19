@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
  * @author: Bean
  * @date: 2022/8/12  19:30
  */
+@Deprecated
 public interface EntityMapper<T> extends BaseMapper<T> {
 
     /**

@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * @description: ...
+ * @description: 实现了MyBatis-plush中的IService的类似功能，扩展到Mapper中
  * @author: Bean
  * @date: 2022/8/12  19:30
  */
@@ -78,13 +78,13 @@ public interface EntityMapper<T> extends BaseMapper<T> {
             rollbackFor = {Exception.class}
     )
     default boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize) {
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(currentModelClass());
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getModelClass());
         Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!", new Object[0]);
         String keyProperty = tableInfo.getKeyProperty();
         Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!", new Object[0]);
         Log log = LogFactory.getLog(this.getClass());
 
-        return SqlHelper.saveOrUpdateBatch(this.currentModelClass(), this.getClass(), log, entityList, batchSize, (sqlSession, entity) -> {
+        return SqlHelper.saveOrUpdateBatch(this.getModelClass(), this.getClass(), log, entityList, batchSize, (sqlSession, entity) -> {
             Object idVal = tableInfo.getPropertyValue(entity, keyProperty);
             return StringUtils.checkValNull(idVal) || CollectionUtils.isEmpty(sqlSession.selectList(this.getSqlStatement(SqlMethod.SELECT_BY_ID), entity));
         }, (sqlSession, entity) -> {
@@ -124,7 +124,7 @@ public interface EntityMapper<T> extends BaseMapper<T> {
 
     default  <E> boolean executeBatch(Collection<E> list, int batchSize, BiConsumer<SqlSession, E> consumer) {
         Log log = LogFactory.getLog(this.getClass());
-        return SqlHelper.executeBatch(this.currentModelClass(), log, list, batchSize, consumer);
+        return SqlHelper.executeBatch(this.getModelClass(), log, list, batchSize, consumer);
     }
 
     default  <E> boolean executeBatch(Collection<E> list, BiConsumer<SqlSession, E> consumer) {
@@ -132,7 +132,7 @@ public interface EntityMapper<T> extends BaseMapper<T> {
     }
 
     default boolean removeById(Serializable id) {
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(currentModelClass());
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getModelClass());
         return tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill() ? this.removeById(id, true) : SqlHelper.retBool(deleteById(id));
     }
 
@@ -144,14 +144,14 @@ public interface EntityMapper<T> extends BaseMapper<T> {
         if (CollectionUtils.isEmpty(list)) {
             return false;
         } else {
-            TableInfo tableInfo = TableInfoHelper.getTableInfo(currentModelClass());
+            TableInfo tableInfo = TableInfoHelper.getTableInfo(getModelClass());
             return tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill() ? this.removeBatchByIds(list, true) : SqlHelper.retBool(deleteBatchIds(list));
         }
     }
 
     default boolean removeById(Serializable id, boolean useFill) {
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(currentModelClass());
-        if (useFill && tableInfo.isWithLogicDelete() && !currentModelClass().isAssignableFrom(id.getClass())) {
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getModelClass());
+        if (useFill && tableInfo.isWithLogicDelete() && !getModelClass().isAssignableFrom(id.getClass())) {
             T instance = tableInfo.newInstance();
             tableInfo.setPropertyValue(instance, tableInfo.getKeyProperty(), new Object[]{id});
             return this.removeById((Serializable) instance);
@@ -171,7 +171,7 @@ public interface EntityMapper<T> extends BaseMapper<T> {
             rollbackFor = {Exception.class}
     )
     default boolean removeBatchByIds(Collection<?> list, int batchSize) {
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(currentModelClass());
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getModelClass());
         return this.removeBatchByIds(list, batchSize, tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill());
     }
 
@@ -179,7 +179,7 @@ public interface EntityMapper<T> extends BaseMapper<T> {
             rollbackFor = {Exception.class}
     )
     default boolean removeBatchByIds(Collection<?> list, int batchSize, boolean useFill) {
-        Class<?> entityClass = currentModelClass();
+        Class<?> entityClass = getModelClass();
 
         String sqlStatement = this.getSqlStatement(SqlMethod.DELETE_BY_ID);
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);

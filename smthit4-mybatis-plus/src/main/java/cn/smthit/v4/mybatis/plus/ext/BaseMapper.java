@@ -1,6 +1,5 @@
 package cn.smthit.v4.mybatis.plus.ext;
 
-import cn.smthit.v4.mybatis.plus.EntityMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.Mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description: ...
+ * @description: 代替Mybatis-plus中的BaseMapper
  * @author: Bean
  * @date: 2022/9/19  1:18
  */
@@ -72,7 +71,11 @@ public interface BaseMapper<T> extends Mapper<T> {
 
     <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, @Param("ew") Wrapper<T> queryWrapper);
 
-    default Class<?> currentModelClass() {
+    /**
+     * 获取当前的模型类的类型
+     * @return
+     */
+    default Class<?> getModelClass() {
         Class<?> cls = GenericTypeResolver.resolveTypeArgument(this.getClass(), BaseMapper.class);
         return cls;
     }

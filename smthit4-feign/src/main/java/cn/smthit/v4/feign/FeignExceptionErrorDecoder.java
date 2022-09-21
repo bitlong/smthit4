@@ -30,7 +30,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
         if (response.body() != null) {
 
             Collection<String> errorDecodes = response.headers().get(FeignConstants.FEIGN_REQUEST_HEADER);
-            if(errorDecodes.isEmpty()) {
+            if(errorDecodes == null || errorDecodes.isEmpty()) {
                 return errorStatus(methodKey, response);
             }
 

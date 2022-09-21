@@ -30,12 +30,6 @@ public class CGMapperProxy<T> implements MethodInterceptor {
             throw new RuntimeException("找不到对应的Mapper, Mapper: " + cls.getName());
         }
 
-        //获取当前的模型类
-        if(method.getName().equals("currentModelClass")) {
-            Class<?> cls = GenericTypeResolver.resolveTypeArgument(target.getClass(), EntityMapper.class);
-            return cls;
-        }
-
         return method.invoke(target, args);
 
     }

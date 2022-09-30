@@ -14,6 +14,11 @@ import java.util.List;
  * @date: 2022/8/15  18:26
  */
 public class PageKit {
+
+    public static <T> Page<T> newPage(int current, int size) {
+        return new Page<T>(current, size);
+    }
+
     /**
      * 创建一个Page对象
      * @param <T>

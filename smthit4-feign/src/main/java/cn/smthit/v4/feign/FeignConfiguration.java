@@ -1,6 +1,6 @@
 package cn.smthit.v4.feign;
 
-import cn.smthit.v4.feign.exception.FeiginExceptionHandler;
+import cn.smthit.v4.feign.exception.FeignExceptionHandler;
 import feign.RequestInterceptor;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
@@ -38,7 +38,7 @@ public class FeignConfiguration implements WebMvcConfigurer {
 
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-        FeiginExceptionHandler exceptionHandle = new FeiginExceptionHandler();
+        FeignExceptionHandler exceptionHandle = new FeignExceptionHandler();
         exceptionHandle.setOrder(1);
         resolvers.add(exceptionHandle);
     }

@@ -2,15 +2,15 @@ package cn.smthit.v4.feign;
 
 import cn.smthit.v4.common.lang.exception.ErrorBuilder;
 import cn.smthit.v4.common.lang.exception.ServiceException;
-import cn.smthit.v4.common.lang.kits.CollectionKit;
 import cn.smthit.v4.feign.exception.ErrorCode;
+import cn.smthit.v4.feign.exception.FeignClientException;
+import cn.smthit.v4.feign.exception.FeignServerException;
 import cn.smthit.v4.feign.kits.SerializalbeKit;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -73,20 +73,22 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
             log.error("40X错误 status={} ret={}", response.status(), ret);
             return ErrorBuilder.builder()
                     .setCode(ErrorCode.HTTP_40X)
-                    .setDetailMessage("HttpStatus : %s %s", response.status())
-                    .appendDetailMessage("Request: %s \n", response.request().toString())
-                    .appendDetailMessage("Response: %s \n", response.toString())
-                    .build(ServiceException.class);
+                    .setMessage(response.reason())
+                    .setDetailMessage("HttpStatus : %s\n", response.status())
+                    .appendDetailMessage("Request: %s\n", response.request().toString())
+                    .appendDetailMessage("Response: %s\n", response.toString())
+                    .build(FeignClientException.class);
         }
 
         if(response.status() >= 500 && response.status() < 599) {
-            log.error("服务器内部异常, status={}", response.status());
+            log.error("服务器内部异常, status={} ret={}", response.status(), ret);
             return ErrorBuilder.builder()
                     .setCode(ErrorCode.HTTP_50X)
+                    .setMessage(response.reason())
                     .setDetailMessage("HttpStatus : %s\n", response.status())
                     .appendDetailMessage("Request: %s", response.request().toString())
                     .appendDetailMessage("Response: %s", response.toString())
-                    .build(ServiceException.class);
+                    .build(FeignServerException.class);
         }
 
         return new ErrorDecoder.Default().decode(key, response);

@@ -26,14 +26,17 @@ import java.nio.charset.StandardCharsets;
  * @date: 2022/9/16  11:59
  */
 @Slf4j
-public class FeiginExceptionHandler implements HandlerExceptionResolver, Ordered {
+public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered {
     @Setter
-
     private int order = Ordered.LOWEST_PRECEDENCE;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
-        log.warn(String.format("信息信息: %s", exp.getMessage()), exp);
+        if(exp instanceof ServiceException) {
+            log.warn(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
+        } else {
+            log.warn(String.format("异常信息: %s", exp.getMessage()), exp);
+        }
 
         String value = request.getHeader(FeignConstants.FEIGN_REQUEST_HEADER);
         //是一个Feign请求，需要序列化异常信息

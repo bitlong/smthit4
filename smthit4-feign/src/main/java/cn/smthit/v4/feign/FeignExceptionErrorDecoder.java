@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
 /**
@@ -30,6 +31,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
         if (response.body() != null) {
 
             Collection<String> errorDecodes = response.headers().get(FeignConstants.FEIGN_REQUEST_HEADER);
+            //请求还没有到微服务，40x或者50x错误
             if(errorDecodes == null || errorDecodes.isEmpty()) {
                 return errorStatus(methodKey, response);
             }
@@ -58,19 +60,32 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
     }
 
     private Exception errorStatus(String key, Response response) {
+        String ret = "";
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             InputStream inputStream = response.body().asInputStream();
+        ){
+            IOUtils.copy(inputStream, byteArrayOutputStream);
+            ret = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
+        } catch (IOException exp) {
+        }
+
         if(response.status() >= 400 && response.status() < 499) {
-            log.error("客户端错误", response.body());
+            log.error("40X错误 status={} ret={}", response.status(), ret);
             return ErrorBuilder.builder()
                     .setCode(ErrorCode.HTTP_40X)
-                    .setDetailMessage("HttpStatus : %s %s", response.status(), response.body())
+                    .setDetailMessage("HttpStatus : %s %s", response.status())
+                    .appendDetailMessage("Request: %s \n", response.request().toString())
+                    .appendDetailMessage("Response: %s \n", response.toString())
                     .build(ServiceException.class);
         }
 
         if(response.status() >= 500 && response.status() < 599) {
-            log.error("服务器内部异常", response.body());
+            log.error("服务器内部异常, status={}", response.status());
             return ErrorBuilder.builder()
                     .setCode(ErrorCode.HTTP_50X)
-                    .setDetailMessage("HttpStatus : %s %s", response.status(), response.body())
+                    .setDetailMessage("HttpStatus : %s\n", response.status())
+                    .appendDetailMessage("Request: %s", response.request().toString())
+                    .appendDetailMessage("Response: %s", response.toString())
                     .build(ServiceException.class);
         }
 

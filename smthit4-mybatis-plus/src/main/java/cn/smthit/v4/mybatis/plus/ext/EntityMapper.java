@@ -1,5 +1,6 @@
 package cn.smthit.v4.mybatis.plus.ext;
 
+import cn.smthit.v4.common.lang.kits.BeanKit;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -59,6 +60,74 @@ public interface EntityMapper<T> extends BaseMapper<T> {
             return !StringUtils.checkValNull(idVal) && !Objects.isNull(selectById((Serializable)idVal)) ? SqlHelper.retBool(updateById(entity)) : SqlHelper.retBool(this.insert(entity));
         }
     }
+
+    /**
+     * 部分更新对象属性
+     * @param id
+     * @param attrVals
+     * @return
+     */
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    default boolean update(Serializable id, Object attrVals) {
+        T t = selectById(id);
+        Assert.notNull(t, "error: Object not exist, id = %s", id);
+        //遍历values的属性值，如果能匹配上类型和属性名，则赋值。忽略value中属性为null的值
+        BeanKit.copyPropertiesFromBean2Bean(attrVals, t);
+        return saveOrUpdate(t);
+    }
+
+    /**
+     * 部分更新对象属性
+     * @param id
+     * @param atrrVals
+     * @return
+     */
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    default boolean update(Serializable id, Map<String, Object> atrrVals) {
+        T t = selectById(id);
+        Assert.notNull(t, "error: Object not exist, id = %s", id);
+        BeanKit.copyPropertiesFromMap2Bean(t, atrrVals);
+        return saveOrUpdate(t);
+    }
+
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    default boolean update(T entity, Object attrVals) {
+        if (null == entity) {
+            return false;
+        }
+
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(entity.getClass());
+        Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!", new Object[0]);
+        String keyProperty = tableInfo.getKeyProperty();
+        Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!", new Object[0]);
+        Object idVal = tableInfo.getPropertyValue(entity, tableInfo.getKeyProperty());
+
+        BeanKit.copyPropertiesFromBean2Bean(attrVals, entity);
+        return SqlHelper.retBool(updateById(entity));
+    }
+
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    default boolean update(T entity, Map<String, Object> attrVals) {
+        if(null == entity)
+            return false;
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(entity.getClass());
+        Assert.notNull(tableInfo, "error: can not execute. because can not find cache of TableInfo for entity!", new Object[0]);
+        String keyProperty = tableInfo.getKeyProperty();
+        Assert.notEmpty(keyProperty, "error: can not execute. because can not find column for id from entity!", new Object[0]);
+        Object idVal = tableInfo.getPropertyValue(entity, tableInfo.getKeyProperty());
+
+        BeanKit.copyPropertiesFromMap2Bean(entity, attrVals);
+        return SqlHelper.retBool(updateById(entity));
+    }
+
     @Transactional(
             rollbackFor = {Exception.class}
     )

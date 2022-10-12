@@ -201,7 +201,7 @@ public class BeanKit {
 		for (int i = 0; i < fields.length; i++) {
 			Field fld = fields[i];
 			Object obj = params.get(fld.getName());
-			if (obj != null && !mapExcludes.contains(fld.getName())) {
+			if (obj != null && !mapExcludes.contains(fld.getName()) && fld.getType().equals(obj.getClass())) {
 				BeanKit.setAttrributeValue(updateObj, fld.getName(), obj);
 			}
 			

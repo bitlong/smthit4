@@ -305,6 +305,40 @@ public class BeanKit {
 		}
 	}
 
+	public static void copyPropertiesFromBean2Bean(Object sourceObj, Object destObj, String[] excludes) {
+		Set<String> mapExcludes = new HashSet<String>();
+		if (excludes != null && excludes.length > 0) {
+			for (String exclude : excludes) {
+				mapExcludes.add(exclude);
+			}
+		}
+
+		if (sourceObj == null || destObj == null)
+			return;
+
+		Field[] fields = ReflectKit.getAllField(sourceObj.getClass());
+		Field[] destFields = ReflectKit.getAllField(destObj.getClass());
+
+		Map<String, Object> mapDestFields = new HashMap<String, Object>();
+
+		for (int i = 0; i < destFields.length; i++) {
+			if(mapExcludes.contains(destFields[i].getName())) {
+				continue;
+			}
+			mapDestFields.put(destFields[i].getName(), destFields[i]);
+		}
+
+		for (int i = 0; i < fields.length; i++) {
+			Field fld = fields[i];
+			Field destField = (Field) mapDestFields.get(fld.getName());
+
+			if (destField != null && destField.getType().equals(fld.getType())) {
+				Object value = BeanKit.getAttrributeValue(sourceObj, fld.getName());
+				BeanKit.setAttrributeValue(destObj, destField.getName(), value);
+			}
+		}
+	}
+
 	public static boolean copyPropertiesFromBean2Bean(Object sourceObj, Object destObj, IPropertyChanged changedCallback) {
 		if (sourceObj == null || destObj == null)
 			return false;
@@ -342,4 +376,6 @@ public class BeanKit {
 		
 		return hasChanged;
 	};
+
+
 }

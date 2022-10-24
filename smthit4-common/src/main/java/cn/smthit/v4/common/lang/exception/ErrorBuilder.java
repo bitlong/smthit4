@@ -3,6 +3,7 @@ package cn.smthit.v4.common.lang.exception;
 import cn.smthit.v4.common.lang.enums.EnumStatus;
 import cn.smthit.v4.common.lang.enums.IEnumStatus;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 
@@ -11,11 +12,13 @@ import java.lang.reflect.Constructor;
  * @author: Bean
  * @date: 2022/9/9  11:51
  */
+@Slf4j
 @Accessors(chain = true)
 public class ErrorBuilder {
 
     private IEnumStatus<String> code;
     private String message;
+    private Throwable throwable;
     private StringBuffer detailMessage = new StringBuffer();
 
    public  static ErrorBuilder builder() {
@@ -48,6 +51,11 @@ public class ErrorBuilder {
        return this;
     }
 
+    public ErrorBuilder setParentException(Throwable exp) {
+       this.throwable = exp;
+        return this;
+    }
+
     public <T extends ServiceException> T build(Class<T> cls) {
         T instance = null;
         try {
@@ -67,7 +75,12 @@ public class ErrorBuilder {
                 instance.setMessage(instance.getMessage() == null ? message : instance.getMessage() + ", " + message);
             }
 
+            if(throwable != null) {
+                instance.addSuppressed(throwable);
+            }
+
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
 
         return instance;

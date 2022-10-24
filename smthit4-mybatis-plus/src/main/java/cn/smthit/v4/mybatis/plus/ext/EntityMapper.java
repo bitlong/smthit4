@@ -70,12 +70,14 @@ public interface EntityMapper<T> extends BaseMapper<T> {
     @Transactional(
             rollbackFor = {Exception.class}
     )
-    default boolean update(Serializable id, Object attrVals) {
-        T t = selectById(id);
-        Assert.notNull(t, "error: Object not exist, id = %s", id);
+    default boolean updateByObject(Serializable id, Object attrVals) {
+        T entityClass = selectById(id);
+        Assert.notNull(entityClass, "error: Object not exist, id = %s", id);
         //遍历values的属性值，如果能匹配上类型和属性名，则赋值。忽略value中属性为null的值
-        BeanKit.copyPropertiesFromBean2Bean(attrVals, t);
-        return saveOrUpdate(t);
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass.getClass());
+        String keyProperty = tableInfo.getKeyProperty();
+        BeanKit.copyPropertiesFromBean2Bean(attrVals, entityClass, new String[] {keyProperty});
+        return SqlHelper.retBool(updateById(entityClass));
     }
 
     /**
@@ -87,17 +89,19 @@ public interface EntityMapper<T> extends BaseMapper<T> {
     @Transactional(
             rollbackFor = {Exception.class}
     )
-    default boolean update(Serializable id, Map<String, Object> atrrVals) {
-        T t = selectById(id);
-        Assert.notNull(t, "error: Object not exist, id = %s", id);
-        BeanKit.copyPropertiesFromMap2Bean(t, atrrVals);
-        return saveOrUpdate(t);
+    default boolean updateByMap(Serializable id, Map<String, Object> atrrVals) {
+        T entityClass = selectById(id);
+        Assert.notNull(entityClass, "error: Object not exist, id = %s", id);
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass.getClass());
+        String keyProperty = tableInfo.getKeyProperty();
+        BeanKit.copyPropertiesFromMap2Bean(entityClass, atrrVals, new String[] {keyProperty});
+        return SqlHelper.retBool(updateById(entityClass));
     }
 
     @Transactional(
             rollbackFor = {Exception.class}
     )
-    default boolean update(T entity, Object attrVals) {
+    default boolean updateByObject(T entity, Object attrVals) {
         if (null == entity) {
             return false;
         }
@@ -115,7 +119,7 @@ public interface EntityMapper<T> extends BaseMapper<T> {
     @Transactional(
             rollbackFor = {Exception.class}
     )
-    default boolean update(T entity, Map<String, Object> attrVals) {
+    default boolean updateByMap(T entity, Map<String, Object> attrVals) {
         if(null == entity)
             return false;
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entity.getClass());

@@ -274,7 +274,7 @@ public class BeanKit {
 		return result;
 	}
 
-	public static void copy(Object sourceObject, Object destObject) {
+	public static void convert(Object sourceObject, Object destObject) {
 		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject);
 	}
 
@@ -309,7 +309,7 @@ public class BeanKit {
 		}
 	}
 
-	public static void copy(Object sourceObject, Object destObject, String[] excludes) {
+	public static void convert(Object sourceObject, Object destObject, String[] excludes) {
 		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject, excludes);
 	}
 
@@ -347,7 +347,7 @@ public class BeanKit {
 		}
 	}
 
-	public static void copy(Object sourceObject, Object destObject, IPropertyChanged changedCallback) {
+	public static void convert(Object sourceObject, Object destObject, IPropertyChanged changedCallback) {
 		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject, changedCallback);
 	}
 

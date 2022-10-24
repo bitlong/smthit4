@@ -1,7 +1,7 @@
 package cn.smthit.v4.mq.rabbitmq.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.ReturnedMessage;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -31,15 +31,14 @@ public class RabbitConfiguration {
             }
         });
 
-        template.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
-
+        template.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             @Override
-            public void returnedMessage(ReturnedMessage returnedMessage) {
-                log.debug("Return Callback, Message: " + returnedMessage.getMessage() +
-                        ", replyCode: " + returnedMessage.getReplyCode() +
-                        ", replyText: " + returnedMessage.getReplyText() +
-                        ", exchange: " + returnedMessage.getExchange() +
-                        ", routeKey: " + returnedMessage.getRoutingKey());
+            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routeKey) {
+                log.debug("Return Callback, Message: " + message +
+                        ", replyCode: " + replyCode +
+                        ", replyText: " + replyText +
+                        ", exchange: " + exchange +
+                        ", routeKey: " + routeKey);
             }
         });
 

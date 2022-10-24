@@ -34,7 +34,7 @@
         <java_target_version>1.8</java_target_version>
         <maven_compiler_version>3.6.0</maven_compiler_version>
 
-        <spring-boot-version>2.4.1</spring-boot-version>
+        <spring-boot-version>2.3.12.RELEASE</spring-boot-version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.7.RELEASE</spring-cloud-alibaba.version>
 

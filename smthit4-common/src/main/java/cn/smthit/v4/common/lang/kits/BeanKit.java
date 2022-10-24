@@ -274,9 +274,13 @@ public class BeanKit {
 		return result;
 	}
 
+	public static void copy(Object sourceObject, Object destObject) {
+		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject);
+	}
+
 	/**
 	 * 复制两个类中 属性名相同且类型相同的 对象值。
-	 * 
+	 * @deprecated  use copy()
 	 * @param sourceObj
 	 * @param destObj
 	 */
@@ -303,6 +307,10 @@ public class BeanKit {
 				BeanKit.setAttrributeValue(destObj, destField.getName(), value);
 			}
 		}
+	}
+
+	public static void copy(Object sourceObject, Object destObject, String[] excludes) {
+		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject, excludes);
 	}
 
 	public static void copyPropertiesFromBean2Bean(Object sourceObj, Object destObj, String[] excludes) {
@@ -337,6 +345,10 @@ public class BeanKit {
 				BeanKit.setAttrributeValue(destObj, destField.getName(), value);
 			}
 		}
+	}
+
+	public static void copy(Object sourceObject, Object destObject, IPropertyChanged changedCallback) {
+		BeanKit.copyPropertiesFromBean2Bean(sourceObject, destObject, changedCallback);
 	}
 
 	public static boolean copyPropertiesFromBean2Bean(Object sourceObj, Object destObj, IPropertyChanged changedCallback) {

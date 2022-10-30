@@ -27,7 +27,7 @@ public  class SmthitValidator<T> {
 
     public SmthitResult<?> check(Class<?> group, Boolean throwException) {
         SmthitResult<?> result = check(group);
-        if(throwException) {
+        if(result.hasError() && throwException) {
             throw ErrorBuilder.builder()
                     .setCode(ErrorCode.ASSERT_FAILED)
                     .setDetailMessage(result.toSimple())

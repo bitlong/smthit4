@@ -38,7 +38,7 @@ public class ErrorBuilder {
     public ErrorBuilder appendDetailMessage(String message, Object...args) {
         String formattedMsg = String.format(message, args);
         if(detailMessage.length() > 0) {
-            detailMessage.append("\n");
+            detailMessage.append("\n\n");
         }
         detailMessage.append(formattedMsg);
         return this;

@@ -1,6 +1,9 @@
 package cn.smthit.v4.common.lang.validator;
 
 
+import cn.smthit.v4.common.lang.exception.AssertException;
+import cn.smthit.v4.common.lang.exception.ErrorBuilder;
+import cn.smthit.v4.common.lang.exception.ErrorCode;
 import cn.smthit.v4.common.lang.validator.hibernate.ValidatorKit;
 
 import javax.validation.ConstraintViolation;
@@ -14,11 +17,26 @@ import java.util.Set;
  */
 public  class SmthitValidator<T> {
 
-    public SmthitResult check() {
-        return check(null);
+    public SmthitResult<?> check() {
+        return check(null, false);
     }
 
-    public SmthitResult check(Class<?> group) {
+    public SmthitResult<?> check(Boolean throwException) {
+        return check(null, throwException);
+    }
+
+    public SmthitResult<?> check(Class<?> group, Boolean throwException) {
+        SmthitResult<?> result = check(group);
+        if(throwException) {
+            throw ErrorBuilder.builder()
+                    .setCode(ErrorCode.ASSERT_FAILED)
+                    .setDetailMessage(result.toSimple())
+                    .build(AssertException.class);
+        }
+        return result;
+    }
+
+    public SmthitResult<?> check(Class<?> group) {
         SmthitResult result = new SmthitResult();
         Set<ConstraintViolation<SmthitValidator<T>>> setCV = ValidatorKit.getValidator().validate(this,
                 group == null ? Default.class : group);
@@ -33,11 +51,11 @@ public  class SmthitValidator<T> {
         return result;
     }
 
-    public SmthitResult checkProperty(String propertyName) {
+    public SmthitResult<?> checkProperty(String propertyName) {
         return checkProperty(null, propertyName);
     }
 
-    public SmthitResult checkProperty(Class<?> group, String propertyName) {
+    public SmthitResult<?> checkProperty(Class<?> group, String propertyName) {
         SmthitResult result = new SmthitResult();
 
         Set<ConstraintViolation<SmthitValidator<T>>> setCV = ValidatorKit.getValidator().validateProperty(this, propertyName,

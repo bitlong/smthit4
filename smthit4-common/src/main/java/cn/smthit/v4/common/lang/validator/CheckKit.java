@@ -16,6 +16,10 @@ import java.util.Set;
  */
 public class CheckKit {
 
+    public static <T> SmthitResult<?> check(T object, Boolean throwException) {
+        return check(object, null, throwException);
+    }
+
     public static <T> SmthitResult<?> check(T object, Class<?> group, Boolean throwException) {
         SmthitResult<T> result =  check(object, group);
 

@@ -5,6 +5,7 @@ package cn.smthit.v4.common.lang.enums;
 
 
 import cn.smthit.v4.common.lang.exception.ServiceException;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,25 @@ import java.util.Map;
  *
  */
 public final class EnumStatusKit {
+
+	/**
+	 * 获取状态描述，不存在返回 EMPTY
+	 * @param enums
+	 * @param value
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> String getStatusDesc(Class<? extends EnumStatus<T>> enums, T value ) {
+		if(value == null)
+			return StringUtils.EMPTY;
+
+		EnumStatus<T> status = getStatusByValue(enums, value);
+		if(status == null) {
+			return StringUtils.EMPTY;
+		}
+
+		return status.getDesc();
+	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> EnumStatus<T> getStatusByValue(Class<? extends EnumStatus<T>> enums, T value) {

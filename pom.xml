@@ -63,7 +63,6 @@
         <lombok.version>1.18.4</lombok.version>
         <dagger.version>2.15</dagger.version>
         <redisson.version>3.16.8</redisson.version>
-
         <!-- Validator -->
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
         <jakarta.el.version>4.0.1</jakarta.el.version>

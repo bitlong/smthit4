@@ -5,6 +5,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,7 +22,7 @@ public class RabbitConfiguration {
     public RabbitTemplate createRabbitTemplate(ConnectionFactory factory) {
         RabbitTemplate template = new RabbitTemplate();
         template.setConnectionFactory(factory);
-
+        template.setMessageConverter(new Jackson2JsonMessageConverter());
         template.setMandatory(true);
 
         template.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {

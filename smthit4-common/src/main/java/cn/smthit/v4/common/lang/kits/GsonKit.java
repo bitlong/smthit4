@@ -19,8 +19,17 @@ import java.lang.reflect.Type;
  * @author zhang kj 
  */
 public class GsonKit {
-	//下划线模式
-    private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+	/**
+	 * 下划线模式
+	 */
+    private static Gson gson = new GsonBuilder()
+            .setLenient()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .enableComplexMapKeySerialization()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .disableHtmlEscaping()
+            .create();
 
     private GsonKit() {
     }  

@@ -10,5 +10,6 @@ public class FeignConstants {
      * feign请求的标识
      */
     public static final String FEIGN_REQUEST_HEADER = "feign-request";
+    public static final String FEIGN_REQUEST_ID_HEADER = "feign-request-id";
     public static final String FEIGN_REQUEST_HEADER_VALUE = "smthit-feign-request-flag";
 }

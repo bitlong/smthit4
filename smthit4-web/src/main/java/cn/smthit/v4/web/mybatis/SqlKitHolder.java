@@ -25,8 +25,9 @@ public class SqlKitHolder implements ApplicationContextAware, EnvironmentAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (SqlKitHolder.applicationContext != null)
+        if (SqlKitHolder.applicationContext != null) {
             return;
+        }
 
         SqlKitHolder.applicationContext = applicationContext;
 
@@ -34,8 +35,9 @@ public class SqlKitHolder implements ApplicationContextAware, EnvironmentAware {
 
     @Override
     public void setEnvironment(Environment environment) {
-        if (SqlKitHolder.environment != null)
+        if (SqlKitHolder.environment != null) {
             return;
+        }
         SqlKitHolder.environment = environment;
     }
 

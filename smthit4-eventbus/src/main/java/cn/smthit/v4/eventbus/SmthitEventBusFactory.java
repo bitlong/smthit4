@@ -120,7 +120,7 @@ public class SmthitEventBusFactory {
 	
 	/**
 	 * 获取默认总线
-	 * @return
+	 * @return eventBus
 	 */
 	public EventBus getDefaultEventBus() {
 		return defaultSyncEventBus;
@@ -128,7 +128,7 @@ public class SmthitEventBusFactory {
 	
 	/**
 	 * 获取默认的异步消息总线
-	 * @return
+	 * @return eventBus
 	 */
 	public EventBus getDefaultAsyncEventBus() {
 		return defaultAsyncEventBus;
@@ -137,7 +137,7 @@ public class SmthitEventBusFactory {
 	/**
 	 * 获取指定的总线
 	 * @param eventBusName
-	 * @return
+	 * @return EventBus
 	 */
 	public EventBus getEventBus(String eventBusName) {
 		if(SMTHIT_DEFAULT_SYNC_BUS.equalsIgnoreCase(eventBusName)) {

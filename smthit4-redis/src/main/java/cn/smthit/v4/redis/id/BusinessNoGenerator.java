@@ -1,4 +1,4 @@
-package cn.smthit.v4.redis;
+package cn.smthit.v4.redis.id;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
  * @author: Bean
  * @date: 2022/8/18  12:23
  */
-@Component
 @Slf4j
 public class BusinessNoGenerator {
 
@@ -29,9 +28,11 @@ public class BusinessNoGenerator {
      */
     public String generate(String businessNoPrefix, int businessCode, Integer digit) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
         String date = LocalDateTime.now(ZoneOffset.of("+8")).format(formatter);
         String key = businessNoPrefix + businessCode + ":" + date;
         Long increment = redisTemplate.opsForValue().increment(key);
+
         return date + businessCode + String.format("%0" + digit + "d", increment);
     }
 

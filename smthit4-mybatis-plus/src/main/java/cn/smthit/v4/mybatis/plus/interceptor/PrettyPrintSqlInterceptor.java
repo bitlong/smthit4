@@ -106,7 +106,7 @@ public class PrettyPrintSqlInterceptor implements Interceptor {
                 .append("*   ").append(sql).append(StringPool.NEWLINE)
                 .append("*********************************************************").append(StringPool.NEWLINE);
 
-        log.info(sb.toString());
+        log.debug(sb.toString());
     }
 
     @Override

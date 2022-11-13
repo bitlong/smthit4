@@ -1,4 +1,4 @@
-package cn.smthit.v4.redis.kits;
+package cn.smthit.v4.redis.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

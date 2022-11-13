@@ -62,7 +62,8 @@
         <quartz.version>2.3.0</quartz.version>
         <lombok.version>1.18.4</lombok.version>
         <dagger.version>2.15</dagger.version>
-        <redisson.version>3.16.8</redisson.version>
+        <redisson.version>3.18.0</redisson.version>
+        <redisson-starter.version>3.18.0</redisson-starter.version>
         <!-- Validator -->
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
         <jakarta.el.version>4.0.1</jakarta.el.version>
@@ -322,6 +323,23 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-starter.version}</version>
+                <exclusions>
+                    <!-- 去除spring-boot-starter-web依赖，否则Gateway的webflux无法使用-->
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-web</artifactId>
+                    </exclusion>
+                    <!-- 去除springboot默认的logback配置-->
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
             <dependency>

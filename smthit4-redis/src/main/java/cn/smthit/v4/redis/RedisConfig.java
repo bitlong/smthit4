@@ -1,5 +1,6 @@
 package cn.smthit.v4.redis;
 
+import cn.smthit.v4.redis.cache.RedisKit;
 import cn.smthit.v4.redis.id.BusinessNoGenerator;
 import cn.smthit.v4.redis.lock.impl.RedissonDistributedLocker;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -138,5 +139,10 @@ public class RedisConfig {
     @Bean
     public RedissonDistributedLocker redissonDistributedLocker() {
         return new RedissonDistributedLocker();
+    }
+
+    @Bean
+    public RedisKit RedisKit() {
+        return new RedisKit();
     }
 }

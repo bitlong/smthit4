@@ -1,5 +1,6 @@
 package cn.smthit.v4.redis;
 
+import cn.smthit.v4.redis.cache.RedisKit;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -42,4 +43,5 @@ public class RedisCacheConfig {
 
         return config;
     }
+
 }

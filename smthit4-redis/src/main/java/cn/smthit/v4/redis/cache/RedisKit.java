@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * @author: Bean
  * @date: 2022/8/18  12:23
  */
-@Component
 public class RedisKit {
     /**
      * 注入redisTemplate bean

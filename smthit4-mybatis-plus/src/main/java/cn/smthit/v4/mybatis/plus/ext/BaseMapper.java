@@ -54,6 +54,15 @@ public interface BaseMapper<T> extends Mapper<T> {
         }
     }
 
+    default T selectFirst(@Param("ew") Wrapper<T> queryWrapper) {
+        List<T> ts = this.selectList(queryWrapper);
+        if (CollectionUtils.isNotEmpty(ts)) {
+            return ts.get(0);
+        } else {
+            return null;
+        }
+    }
+
     default boolean exists(Wrapper<T> queryWrapper) {
         Long count = this.selectCount(queryWrapper);
         return null != count && count > 0L;

@@ -84,7 +84,7 @@ public class PrettyPrintSqlInterceptor implements Interceptor {
             value = "'" + obj.toString() + "'";
         } else if (obj instanceof Date) {
             DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, Locale.CHINA);
-            value = "'" + formatter.format(DateTime.now()) + "'";
+            value = "'" + formatter.format(obj) + "'";
         } else {
             if (obj != null) {
                 value = obj.toString();

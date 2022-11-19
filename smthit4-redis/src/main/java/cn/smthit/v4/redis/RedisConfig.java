@@ -3,6 +3,7 @@ package cn.smthit.v4.redis;
 import cn.smthit.v4.redis.cache.RedisKit;
 import cn.smthit.v4.redis.id.BusinessNoGenerator;
 import cn.smthit.v4.redis.lock.impl.RedissonDistributedLocker;
+import cn.smthit.v4.redis.queue.impl.DistributeQueue;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,7 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 @AutoConfigureBefore(RedisAutoConfiguration.class)
+//@ConditionalOnProperty(value = "smthit4.redis.enabled", havingValue = "true")
 public class RedisConfig {
     @Value("${spring.redis.host:#{'127.0.0.1'}}")
     private String hostName;
@@ -144,5 +147,10 @@ public class RedisConfig {
     @Bean
     public RedisKit RedisKit() {
         return new RedisKit();
+    }
+
+    @Bean
+    public DistributeQueue distributeQueue() {
+        return new DistributeQueue();
     }
 }

@@ -28,6 +28,7 @@ public class GsonKit {
             .enableComplexMapKeySerialization()
             .serializeNulls()
             .setPrettyPrinting()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .disableHtmlEscaping()
             .create();
 

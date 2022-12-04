@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.smthit.v4.feign.SmthitFeignAutoConfiguration
+    cn.smthit.v4.feign.SmthitFeignServerAutoConfiguration,\
+    cn.smthit.v4.feign.SmthitFeignClientAutoConfiguration

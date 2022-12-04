@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @description: ...
+ * @description: 微服务Server端调用改类，拦截Controller的异常，并序列化异常信息
  * @author: Bean
  * @date: 2022/9/16  11:59
  */
@@ -33,9 +33,9 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
         if(exp instanceof ServiceException) {
-            log.warn(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
+            log.debug(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
         } else {
-            log.warn(String.format("异常信息: %s", exp.getMessage()), exp);
+            log.debug(String.format("异常信息: %s", exp.getMessage()), exp);
         }
 
         String value = request.getHeader(FeignConstants.FEIGN_REQUEST_HEADER);
@@ -51,21 +51,23 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
             //pass = true 为业务型异常，= false为非业务型异常，统一处理
             Exception exception = pass ? exp : ErrorBuilder.builder()
                     .setCode(ErrorCode.DEFAULT_ERROR)
+                    .setMessage(exp.getMessage())
+                    .setParentException(exp)
                     .setDetailMessage(ExceptionUtils.getStackTrace(exp))
-                    .build(ServiceException.class);
+                    .build(FeignClientException.class);
 
             try {
                 IOUtils.write(SerializalbeKit.serialize(exception), response.getOutputStream());
             } catch (IOException e) {
             }
-            return new ModelAndView();
-        }
-
-        try {
-            String errorMsg = String.format("%s : %s", exp.getClass().getName(), exp.getMessage());
-            IOUtils.write(errorMsg, response.getOutputStream(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            //ignore
+        } else {
+            //非Feign请求
+            try {
+                String errorMsg = String.format("%s : %s", exp.getClass().getName(), exp.getMessage());
+                IOUtils.write(errorMsg, response.getOutputStream(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                //ignore
+            }
         }
 
         return new ModelAndView();

@@ -34,7 +34,7 @@ import java.util.*;
 @Order(1)
 @Slf4j
 public class ApiLogAspect {
-    private boolean output = true;
+    private boolean output = false;
     private ApiLogListenter listener;
     private UserWebContextParser userWebContextParser;
 

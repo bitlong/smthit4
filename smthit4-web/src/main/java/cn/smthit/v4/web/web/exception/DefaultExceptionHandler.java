@@ -1,15 +1,14 @@
 package cn.smthit.v4.web.web.exception;
 
-import cn.smthit.v4.common.lang.data.ResponseData;
+import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.ServiceException;
-import com.google.gson.Gson;
+import cn.smthit.v4.common.lang.kits.GsonKit;
+import com.sun.javafx.binding.StringFormatter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.ClientAbortException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,23 +38,17 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(value = {ServiceException.class, Exception.class, Error.class})
     public Object serviceException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        log.warn("默认异常处理拦截, 异常信息：" + throwable.getMessage(), throwable);
+        StringBuffer sb = new StringBuffer();
 
-        StringJoiner sj = new StringJoiner(";");
-
-        //TODO
-        if (throwable instanceof ClientAbortException) {
-            sj.add("ClientAbortException, " + throwable.getMessage());
-        } else if (throwable instanceof ArithmeticException) {
-            sj.add("数学计算异常, 请检查数学计算公式是否正确, " + throwable.getMessage());
-        } else if (throwable instanceof ServiceException) {
-            sj.add("业务异常, " + throwable.getMessage());
+        if (throwable instanceof ServiceException) {
+            sb.append(throwable.getMessage());
+            log.info("业务访问, 异常信息：" + throwable.getMessage(), throwable);
         } else {
-            sj.add(String.format("其他截住的异常, requestUrl = %s, queryStr = %s", request.getRequestURL(),
-                    request.getQueryString(), throwable.getMessage()));
+            sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
+            log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);
         }
 
-        return printException(sj.toString(), throwable, request, response);
+        return outputException(sb.toString(), throwable, request, response);
     }
 
     /**
@@ -75,16 +68,21 @@ public class DefaultExceptionHandler {
             sj.add(error.getField() + ":" + error.getDefaultMessage());
         });
 
-        return printException(sj.toString(), exp, request, response);
+        return outputException(sj.toString(), exp, request, response);
     }
 
-    protected boolean isAjaxRequest(HttpServletRequest request) {
+    private boolean isAjaxRequest(HttpServletRequest request) {
         return request.getHeader("X-Requested-With") != null &&
                 "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
-    protected Object printException(String message, Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (isAjaxRequest(request)) {
+    private boolean isJsonRequest(HttpServletRequest request) {
+        return request.getHeader("Content-Type") != null &&
+                request.getHeader("Content-Type").startsWith("application/json");
+    }
+
+    private Object outputException(String message, Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (isAjaxRequest(request) || isJsonRequest(request)) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             PrintWriter printWriter = response.getWriter();
@@ -94,7 +92,13 @@ public class DefaultExceptionHandler {
                 msg = DEFAULT_ERROR_MSG;
             }
 
-            printWriter.write(new Gson().toJson(ResponseData.newFailed(msg)));
+            if(throwable instanceof ServiceException) {
+                ServiceException exp = (ServiceException) throwable;
+                printWriter.write(GsonKit.toJson(Result.failed(exp)));
+            } else {
+                printWriter.write(GsonKit.toJson(Result.failed().message(msg)));
+            }
+
             printWriter.flush();
             printWriter.close();
 

@@ -72,7 +72,7 @@ public class ErrorBuilder {
             }
 
             if(message != null) {
-                instance.setMessage(instance.getMessage() == null ? message : instance.getMessage() + ", " + message);
+                instance.setMessage(message);
             }
 
             if(throwable != null) {

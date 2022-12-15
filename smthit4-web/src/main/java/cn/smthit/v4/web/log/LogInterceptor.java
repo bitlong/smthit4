@@ -7,6 +7,7 @@ import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -47,13 +48,28 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				content.put("url", request.getRequestURI() + request.getContextPath());
 				content.put("query_string", request.getQueryString());
 				content.put("content_type", request.getContentType());
-				content.put("request_content", getRequestBody(request));
+				String requestContent = getRequestBody(request);
+
+				try {
+					if(StringUtils.isNotEmpty(requestContent)) {
+						Map<String, Object> mapRequestContent = GsonKit.fromJson(requestContent, Map.class);
+						content.put("request_content", mapRequestContent);
+					} else {
+						content.put("request_content", getRequestBody(request));
+					}
+				} catch (Exception exp) {
+					content.put("request_content", getRequestBody(request));
+				}
 
 				String responseContent = getResponseBody(response);
 
 				try {
-					Map<String, Object> mapContent = GsonKit.fromJson(responseContent, Map.class);
-					content.put("response_content", mapContent);
+					if(StringUtils.isNotEmpty(responseContent)) {
+						Map<String, Object> mapContent = GsonKit.fromJson(responseContent, Map.class);
+						content.put("response_content", mapContent);
+					} else {
+						content.put("response_content", responseContent);
+					}
 				} catch (Exception exp) {
 					content.put("response_content", responseContent);
 				}

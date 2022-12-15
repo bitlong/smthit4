@@ -3,6 +3,7 @@ package cn.smthit.v4.web.web.exception;
 import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.common.lang.kits.GsonKit;
+import cn.smthit.v4.web.kits.WebKit;
 import com.sun.javafx.binding.StringFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -71,18 +72,8 @@ public class DefaultExceptionHandler {
         return outputException(sj.toString(), exp, request, response);
     }
 
-    private boolean isAjaxRequest(HttpServletRequest request) {
-        return request.getHeader("X-Requested-With") != null &&
-                "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
-    }
-
-    private boolean isJsonRequest(HttpServletRequest request) {
-        return request.getHeader("Content-Type") != null &&
-                request.getHeader("Content-Type").startsWith("application/json");
-    }
-
     private Object outputException(String message, Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (isAjaxRequest(request) || isJsonRequest(request)) {
+        if (WebKit.isAjaxRequest(request) || WebKit.isJsonRequest(request)) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             PrintWriter printWriter = response.getWriter();

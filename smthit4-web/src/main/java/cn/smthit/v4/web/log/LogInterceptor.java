@@ -4,12 +4,7 @@
 package cn.smthit.v4.web.log;
 
 import cn.smthit.v4.common.lang.kits.GsonKit;
-import cn.xueda.aiyou.mbus.SystemEvent;
-import cn.xueda.aiyou.mbus.SystemEventKit;
-import cn.xueda.aiyou.spi.enums.system.EnumEventLevel;
-import cn.xueda.aiyou.spi.enums.system.EnumEventLogType;
-import cn.xueda.aiyou.spi.enums.system.EnumEventSource;
-import com.smthit.lang.json.GsonUtil;
+import cn.smthit.v4.web.kits.WebKit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -40,20 +35,31 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		
 		super.afterCompletion(request, response, handler, ex);
 
-		if((request.getMethod().equals("GET") ||
-				request.getMethod().equals("POST") ||
-				request.getMethod().equals("DELETE") ||
-				request.getMethod().equals("PUT"))) {
+		if(WebKit.isAjaxRequest(request) || WebKit.isJsonRequest(request)) {
+			if ((request.getMethod().equals("GET") ||
+					request.getMethod().equals("POST") ||
+					request.getMethod().equals("DELETE") ||
+					request.getMethod().equals("PUT"))) {
 
-			StringBuffer sb = new StringBuffer();
-			Map<String, Object> content = new HashMap<>(10);
+				StringBuffer sb = new StringBuffer();
+				Map<String, Object> content = new HashMap<>(10);
 
-			content.put("url", request.getRequestURI() + request.getContextPath());
-			content.put("query_string", request.getQueryString());
-			content.put("content_type", request.getContentType());
-			content.put("request_content", getRequestBody(request));
-			content.put("response_content", getResponseBody(response));
-			log.debug(GsonKit.toJson(content));
+				content.put("url", request.getRequestURI() + request.getContextPath());
+				content.put("query_string", request.getQueryString());
+				content.put("content_type", request.getContentType());
+				content.put("request_content", getRequestBody(request));
+
+				String responseContent = getResponseBody(response);
+
+				try {
+					Map<String, Object> mapContent = GsonKit.fromJson(responseContent, Map.class);
+					content.put("response_content", mapContent);
+				} catch (Exception exp) {
+					content.put("response_content", responseContent);
+				}
+
+				apiLogger.debug(GsonKit.toJson(content));
+			}
 		}
 	}
 	
@@ -74,7 +80,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 
 	private String getResponseBody(HttpServletResponse response) {
 		String responseBody = "";
-		ContentCachingRequestWrapper wrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
+		ContentCachingResponseWrapper wrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
 		if (wrapper != null) {
 			try {
 				responseBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());

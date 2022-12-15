@@ -32,6 +32,7 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
+
         if(exp instanceof ServiceException) {
             log.debug(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
         } else {

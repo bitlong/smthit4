@@ -6,6 +6,7 @@ import cn.smthit.v4.feign.exception.ErrorCode;
 import cn.smthit.v4.feign.exception.FeignClientException;
 import cn.smthit.v4.feign.exception.FeignServerException;
 import cn.smthit.v4.feign.kits.SerializalbeKit;
+import com.netflix.client.ClientException;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -69,6 +70,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
             }
         }
 
+
         //默认处理方法
         return ErrorBuilder.builder()
                 .setCode(ErrorCode.HTTP_50X)
@@ -86,6 +88,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
             IOUtils.copy(inputStream, byteArrayOutputStream);
             ret = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
         } catch (IOException exp) {
+            log.error(exp.getMessage(), exp);
         }
 
         if(response.status() >= 400 && response.status() < 499) {
@@ -113,6 +116,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
         try {
             return new ErrorDecoder.Default().decode(key, response);
         } catch (FeignException exp) {
+            log.error(exp.getMessage(), exp);
             return ErrorBuilder.builder()
                     .setCode(ErrorCode.HTTP_40X)
                     .setMessage("Feign解码失败,请联系管理员")

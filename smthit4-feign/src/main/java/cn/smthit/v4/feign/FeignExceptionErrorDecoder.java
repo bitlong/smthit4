@@ -56,7 +56,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
                         log.error(e.getMessage(), e);
                         return ErrorBuilder.builder()
                                 .setCode(ErrorCode.HTTP_50X)
-                                .setMessage("接口反序列化失败, 请联系管理员")
+                                .setMessage("接口反序列化失败, 无法找到类，请联系管理员")
                                 .build(cn.smthit.v4.common.lang.exception.ClassNotFoundException.class);
                     }
                 } catch (IOException e) {

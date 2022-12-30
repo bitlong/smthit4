@@ -52,6 +52,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
                     try {
                         return SerializalbeKit.deserialize(byteArrayOutputStream.toByteArray());
                     } catch (ClassNotFoundException e) {
+                        log.error(e.getMessage(), e);
                         return ErrorBuilder.builder()
                                 .setCode(ErrorCode.HTTP_50X)
                                 .setMessage("接口反序列化失败, 请联系管理员")
@@ -59,6 +60,7 @@ public class FeignExceptionErrorDecoder implements ErrorDecoder {
                                 .build(cn.smthit.v4.common.lang.exception.ClassNotFoundException.class);
                     }
                 } catch (IOException e) {
+                    log.error(e.getMessage(), e);
                     return ErrorBuilder.builder()
                             .setCode(ErrorCode.HTTP_50X)
                             .setMessage("IO异常")

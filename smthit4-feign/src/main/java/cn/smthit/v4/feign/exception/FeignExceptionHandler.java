@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @description: 微服务Server端调用改类，拦截Controller的异常，并序列化异常信息
+ * @description: 微服务Server端调用该类，拦截Controller的异常，并序列化异常信息
  * @author: Bean
  * @date: 2022/9/16  11:59
  */
@@ -34,9 +34,9 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
 
         if(exp instanceof ServiceException) {
-            log.debug(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
+            log.error(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
         } else {
-            log.debug(String.format("异常信息: %s", exp.getMessage()), exp);
+            log.error(String.format("异常信息: %s", exp.getMessage()), exp);
         }
 
         String value = request.getHeader(FeignConstants.FEIGN_REQUEST_HEADER);

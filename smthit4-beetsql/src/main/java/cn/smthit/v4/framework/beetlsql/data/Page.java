@@ -65,7 +65,7 @@ public class Page<T> {
 	}
 
 	/**
-	 * @param totalPage the totalPage to set
+	 * @param totalPages the totalPage to set
 	 */
 	public Page<T> setTotalPages(int totalPages) {
 		this.totalPages = totalPages;

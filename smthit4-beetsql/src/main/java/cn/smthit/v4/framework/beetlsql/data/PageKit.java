@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smthit.framework.dal.data;
+package cn.smthit.v4.framework.beetlsql.data;
 
 import cn.smthit.v4.common.lang.convert.AbstractConvert;
 import cn.smthit.v4.common.lang.convert.DefaultConvert;

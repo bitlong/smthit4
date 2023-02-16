@@ -1,17 +1,16 @@
 /**
  * 
  */
-package com.smthit.framework.dal.data;
+package cn.smthit.v4.framework.beetlsql.data;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.smthit.v4.common.lang.kits.ClassKit;
 import cn.smthit.v4.common.lang.kits.Property;
+import cn.smthit.v4.framework.beetlsql.exception.ParamException;
 import org.beetl.sql.clazz.kit.BeanKit;
 import org.modelmapper.ModelMapper;
-
-import com.smthit.framework.dal.exception.ParamException;
 
 
 /**

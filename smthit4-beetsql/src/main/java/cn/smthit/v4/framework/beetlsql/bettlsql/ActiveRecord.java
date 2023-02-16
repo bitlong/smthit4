@@ -1,9 +1,9 @@
 /**
  * 
  */
-package com.smthit.framework.dal.bettlsql;
+package cn.smthit.v4.framework.beetlsql.bettlsql;
 
-import static com.smthit.framework.dal.bettlsql.SqlKit.$;
+import static cn.smthit.v4.framework.beetlsql.bettlsql.SqlKit.$;
 
 /**
  * @author Bean

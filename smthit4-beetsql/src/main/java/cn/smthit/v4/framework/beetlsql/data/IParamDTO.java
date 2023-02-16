@@ -1,15 +1,15 @@
 /**
  * 
  */
-package com.smthit.framework.dal.data;
+package cn.smthit.v4.framework.beetlsql.data;
 
 import javax.validation.Validation;
 
+import cn.smthit.v4.framework.beetlsql.exception.ParamException;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
-import com.smthit.framework.dal.exception.ParamException;
 
 /**
  * @author Bean

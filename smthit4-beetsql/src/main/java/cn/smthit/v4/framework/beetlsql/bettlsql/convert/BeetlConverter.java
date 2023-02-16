@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smthit.framework.dal.bettlsql.convert;
+package cn.smthit.v4.framework.beetlsql.bettlsql.convert;
 
 import cn.smthit.v4.common.lang.convert.DefaultConvert;
 import cn.smthit.v4.common.lang.convert.ExtBean;

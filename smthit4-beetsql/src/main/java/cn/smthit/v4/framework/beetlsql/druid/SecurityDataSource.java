@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smthit.framework.dal.druid;
+package cn.smthit.v4.framework.beetlsql.druid;
 
 import com.alibaba.druid.filter.config.ConfigTools;
 import com.alibaba.druid.pool.DruidDataSource;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smthit.framework.dal.bettlsql;
+package cn.smthit.v4.framework.beetlsql.bettlsql;
 
 import java.util.HashMap;
 import java.util.Map;

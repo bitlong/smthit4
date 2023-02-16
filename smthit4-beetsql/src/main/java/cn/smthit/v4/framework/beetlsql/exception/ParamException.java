@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smthit.framework.dal.exception;
+package cn.smthit.v4.framework.beetlsql.exception;
 
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import com.baidu.unbiz.fluentvalidator.Result;

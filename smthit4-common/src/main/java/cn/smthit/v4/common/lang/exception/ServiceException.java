@@ -20,10 +20,27 @@ public class ServiceException extends RuntimeException {
         this.message = ErrorCode.DEFAULT_ERROR.getDesc();
         this.detailMessage = detailMessage;
     }
+
     public ServiceException(String code, String message, String detailMessage) {
         super(detailMessage);
         this.code = code;
         this.message = message;
         this.detailMessage = detailMessage;
+    }
+
+    public ServiceException(String code, String message, Throwable throwable) {
+        super(throwable);
+        this.code = code;
+        this.message = message;
+    }
+
+    public ServiceException(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ServiceException(String message, Throwable throwable) {
+        super(throwable);
+        this.message = message;
     }
 }

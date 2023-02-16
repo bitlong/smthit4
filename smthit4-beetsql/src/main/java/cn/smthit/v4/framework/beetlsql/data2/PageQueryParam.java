@@ -3,14 +3,15 @@
  */
 package cn.smthit.v4.framework.beetlsql.data2;
 
-import com.smthit.framework.dal.data.EnumOrder;
-import com.smthit.framework.dal.data.OrderBy;
-import com.smthit.framework.dal.exception.PropertyNotFoundException;
-import com.smthit.lang2.utils.ClassKit;
-import com.smthit.lang2.utils.Property;
+
+import cn.smthit.v4.common.lang.kits.ClassKit;
+import cn.smthit.v4.common.lang.kits.Property;
+import cn.smthit.v4.common.lang.kits.StringKit;
+import cn.smthit.v4.framework.beetlsql.data.EnumOrder;
+import cn.smthit.v4.framework.beetlsql.data.OrderBy;
+import cn.smthit.v4.framework.beetlsql.exception.PropertyNotFoundException;
 import lombok.Data;
 import lombok.Getter;
-import org.beetl.sql.core.kit.StringKit;
 
 /**
  * @author Bean 翻页查询的参数对象

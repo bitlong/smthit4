@@ -19,11 +19,11 @@ public class ParamException extends ServiceException {
 	private Result result;
 	
 	public ParamException(String errorCode, String msg, Throwable exception) {
-		super(errorCode, msg, null);
+		super(errorCode, msg, exception);
 	}
 
 	public ParamException(String errorCode, String msg) {
-		super(errorCode, msg, null);
+		super(errorCode, msg);
 	}
 
 	public ParamException(String msg, Throwable exception) {

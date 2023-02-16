@@ -9,4 +9,31 @@
     <artifactId>smthit4-beetsql</artifactId>
     <name>smthit4-beetlsql</name>
     <description>集成BeetlSQL, 最顺手好用的持久层</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl-framework-starter</artifactId>
+            <version>1.2.40.Beetl.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.ibeetl/beetlsql -->
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetlsql</artifactId>
+            <version>3.20.0-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.smthit.v4</groupId>
+            <artifactId>smthit4-common</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+        </dependency>
+    </dependencies>
 </project>

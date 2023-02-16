@@ -24,14 +24,6 @@ public class PaginationUtils {
 				.setTotal(page.getTotal())
 				.setTotalPages(page.getTotalPages());	
 	}
-	
-	public static <VO, PO> Pagination<VO> convertPagination(PageQuery<PO> page, AbstractConvert<PO, VO> convert) {
-		return new Pagination<VO>()
-				.setCurrentPage((int)page.getPageNumber())
-				.setTotal(page.getTotalRow())
-				.setTotalPages((int)page.getTotalPage())
-				.setRows(convert.toVOs(page.getList()));			
-	}
 
 	public static <VO, PO> Pagination<VO> convertPagination(PageResult<PO> page, AbstractConvert<PO, VO> convert) {
 		return new Pagination<VO>()
@@ -41,4 +33,19 @@ public class PaginationUtils {
 				.setRows(convert.toVOs(page));
 	}
 
+	public static <VO, PO> Pagination<VO> convertPagination(PageQuery<PO> page, AbstractConvert<PO, VO> convert) {
+		return new Pagination<VO>()
+				.setCurrentPage((int)page.getPageNumber())
+				.setTotal(page.getTotalRow())
+				.setTotalPages((int)page.getTotalPage())
+				.setRows(convert.toVOs(page.getList()));
+	}
+
+	public static <VO> Pagination<VO> convertPagination(PageQuery<VO> page) {
+		return new Pagination<VO>()
+				.setCurrentPage((int)page.getPageNumber())
+				.setTotal(page.getTotalRow())
+				.setTotalPages((int)page.getTotalPage())
+				.setRows(page.getList());
+	}
 }

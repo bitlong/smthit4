@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * @author Bean
- * @deprecated 使用Result<T>类来代替
+ * 使用Result<T>类来代替
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

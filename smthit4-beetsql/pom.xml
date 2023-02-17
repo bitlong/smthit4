@@ -21,6 +21,12 @@
             <artifactId>beetlsql</artifactId>
             <version>3.20.0-RELEASE</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.ibeetl/sql-springboot-starter -->
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>sql-springboot-starter</artifactId>
+            <version>3.20.0-RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>cn.smthit.v4</groupId>
             <artifactId>smthit4-common</artifactId>
@@ -35,5 +41,6 @@
             <groupId>com.github.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
         </dependency>
+
     </dependencies>
 </project>

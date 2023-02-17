@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum EnumGenderStatus implements EnumStatus {
+public enum EnumGenderStatus implements EnumStatus<Integer> {
 	MALE(1, "男"),
 	FEMALE(2, "女"),
 	UNKOWN(3, "待定");

@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum EnumLogicStatus implements EnumStatus {
+public enum EnumLogicStatus implements EnumStatus<Integer> {
 	NORMAL(1, "正常"),
 	DELETED(0, "删除"),
 	TRUE(1, "真"),

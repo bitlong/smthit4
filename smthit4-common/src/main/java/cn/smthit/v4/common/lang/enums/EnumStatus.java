@@ -22,7 +22,7 @@ public interface EnumStatus<T> extends IEnumStatus<T> {
 	 * @param value
 	 * @return
 	 */
-	public static <T> EnumStatus<T> getEnumStatus(Class<? extends EnumStatus<T>> typeClass, T value) {
+	static <T> EnumStatus<T> getEnumStatus(Class<? extends EnumStatus<T>> typeClass, T value) {
 		EnumStatus<T> status = EnumStatusKit.getStatusByValue(typeClass, value);
 		
 		if(status == null) {
@@ -38,7 +38,7 @@ public interface EnumStatus<T> extends IEnumStatus<T> {
 	 * @param group
 	 * @return
 	 */
-	public static <T> boolean isInGroup(T value, EnumStatus<T>[] group) {
+	static <T> boolean isInGroupByValue(T value, EnumStatus<T>[] group) {
 		for(EnumStatus<T> item : group) {
 			if(item.getValue().equals(value))
 				return true;
@@ -52,13 +52,15 @@ public interface EnumStatus<T> extends IEnumStatus<T> {
 	 * @param group
 	 * @return
 	 */
-	public static <T> boolean isInGroup(EnumStatus<T> status, EnumStatus<T>[] group) {
-		if(status == null)
+	static <T> boolean isInGroup(EnumStatus<T> status, EnumStatus<T>[] group) {
+		if(status == null) {
 			return false;
+		}
 		
 		for(EnumStatus<T> item : group) {
-			if(item == status)
+			if(item == status) {
 				return true;
+			}
 		}
 		
 		return false;

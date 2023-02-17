@@ -15,7 +15,6 @@ import java.util.Map;
  * @author Bean
  *
  */
-@Deprecated
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @ToString

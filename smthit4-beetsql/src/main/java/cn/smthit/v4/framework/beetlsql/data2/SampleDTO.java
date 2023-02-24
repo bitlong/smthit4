@@ -5,7 +5,8 @@ package cn.smthit.v4.framework.beetlsql.data2;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Bean
@@ -14,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SampleDTO extends QueryParamDTO {
-	@NotEmpty
+	@NotNull
 	private Long id;
 
 	public SampleDTO() {

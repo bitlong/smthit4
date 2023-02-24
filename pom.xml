@@ -70,7 +70,7 @@
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
         <!-- 配置参数 -->
         <maven.test.skip>true</maven.test.skip>
-        <maven.javadoc.skip>false</maven.javadoc.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
         <fluent-validator.version>1.0.9</fluent-validator.version>

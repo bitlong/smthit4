@@ -4,7 +4,7 @@
     <groupId>cn.smthit.v4</groupId>
     <artifactId>smthit4</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>smthit-v4</name>
     <url>https://github.com/bitlong/smthit4</url>
     <description>Spring SpringBoot Bootstrap</description>

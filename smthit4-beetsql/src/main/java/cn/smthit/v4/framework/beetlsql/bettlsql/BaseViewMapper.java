@@ -49,6 +49,7 @@ public interface BaseViewMapper<T> {
 	List<T> template(T entity,int start,int size);
 	
 	void templatePage(PageQuery<T> query);
+
 	/**
 	 * 符合模板得个数
 	 * @param entity

@@ -329,6 +329,12 @@
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>${jakarta.validation-api.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baidu.unbiz/fluent-validator-spring -->
+            <dependency>
+                <groupId>com.baidu.unbiz</groupId>
+                <artifactId>fluent-validator-spring</artifactId>
+                <version>1.0.9</version>
+            </dependency>
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>

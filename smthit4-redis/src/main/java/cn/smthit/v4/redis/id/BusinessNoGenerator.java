@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Slf4j
 public class BusinessNoGenerator {
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -27,18 +28,19 @@ public class BusinessNoGenerator {
      * @return
      */
     public String generate(String businessNoPrefix, int businessCode, Integer digit) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        if(digit == null) {
+            digit = 6;
+        }
 
         String date = LocalDateTime.now(ZoneOffset.of("+8")).format(formatter);
         String key = businessNoPrefix + businessCode + ":" + date;
         Long increment = redisTemplate.opsForValue().increment(key);
 
-        return date + businessCode + String.format("%0" + digit + "d", increment);
+        return String.format("%d-%s-%s", businessCode, date, String.format("%0" + digit + "d", increment));
     }
 
     public String generate(String businessNoPrefix, int businessCode) {
         Integer defaultDigit = 6;
         return generate(businessNoPrefix, businessCode, defaultDigit);
     }
-
 }

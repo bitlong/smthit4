@@ -24,7 +24,7 @@ public final class DateKit {
 	public static final String MMdd = "MM-dd";
 	public static final String defaultPattern = "yyyy-MM-dd HH:mm:ss";
 
-	public static Date pareseDate(Object value, String pattern, Date defaultValue) {
+	public static Date parseDate(Object value, String pattern, Date defaultValue) {
 		if (value == null || StringUtils.isBlank(value.toString()))
 			return defaultValue;
 
@@ -38,6 +38,28 @@ public final class DateKit {
 		}
 
 		return getDateByFormatString(value.toString(), formatPattern);
+	}
+
+	public static Date parseDate(String value) {
+		if(value == null) {
+			throw new NullPointerException("value is null");
+		}
+
+		String formatPattern = defaultPattern;
+		return getDateByFormatString(value, formatPattern);
+	}
+
+	public static Date parseDate(String value, String pattern) {
+		if(value == null) {
+			throw new NullPointerException("value is null");
+		}
+
+		String formatPattern = defaultPattern;
+		if(StringUtils.isNotEmpty(pattern)) {
+			formatPattern = pattern;
+		}
+
+		return getDateByFormatString(value, formatPattern);
 	}
 
 	/**
@@ -61,7 +83,7 @@ public final class DateKit {
 	 *            天数（如果day数为负数,说明是此日期前的天数）
 	 * @return
 	 */
-	public static Date getBeforDay(Date date, int Day) {
+	public static Date getBeforeDay(Date date, int Day) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, Day);
@@ -90,7 +112,7 @@ public final class DateKit {
 	 * @param formatString
 	 * @return
 	 */
-	public static Date getDateByFormatString(String formatString, String pattern) {
+	private static Date getDateByFormatString(String formatString, String pattern) {
 		try {
 			return new SimpleDateFormat(pattern).parse(formatString);
 		} catch (ParseException e) {
@@ -209,12 +231,16 @@ public final class DateKit {
 	 *
 	 * @return
 	 */
-	public static Date yesterdaybeginTime() {
+	public static Date yesterdayBeginTime() {
+
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -5);
+
+		cal.add(Calendar.DATE, -1);
+
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 00);
 		cal.set(Calendar.SECOND, 00);
+
 		return cal.getTime();
 
 	}
@@ -226,10 +252,12 @@ public final class DateKit {
 	 */
 	public static Date yesterdayEndTime() {
 		Calendar cal = Calendar.getInstance();
+
 		cal.add(Calendar.DATE, -1);
 		cal.set(Calendar.HOUR_OF_DAY, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
+
 		return cal.getTime();
 
 	}
@@ -242,20 +270,27 @@ public final class DateKit {
 		// TODO Auto-generated method stub
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
+
 		return String.valueOf(cal.get(Calendar.YEAR));
 	}
 
-	public static Date converTime(String closeTime) {
-		if (StringUtils.isNotBlank(closeTime)) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+	public static Date convertToTime(String time, String pattern) {
+		if (StringUtils.isNotBlank(time)) {
+			String formatPattern = defaultPattern;
+			if(StringUtils.isNotEmpty(pattern)) {
+				formatPattern = pattern;
+			}
+
+			SimpleDateFormat sdf = new SimpleDateFormat(formatPattern);
 			try {
-				return sdf.parse(closeTime);
+				return sdf.parse(time);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
 			}
 		}
-		return null;
+
+		throw new NullPointerException("time is null");
 	}
 
 	public static String getWeekDayWithNumber(Integer num) {
@@ -574,7 +609,7 @@ public final class DateKit {
 
 	public static Date parseDate(Object value, String pattern, Date defaultValue, String tips) {
 		try {
-			return pareseDate(value, pattern, defaultValue);
+			return parseDate(value, pattern, defaultValue);
 		} catch (DataParseException exp) {
 			throw new ServiceException(tips);
 		}

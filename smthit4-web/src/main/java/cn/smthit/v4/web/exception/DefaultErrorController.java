@@ -1,4 +1,4 @@
-package cn.smthit.v4.web.web.exception;
+package cn.smthit.v4.web.exception;
 
 /**
  * @description: ...

@@ -1,4 +1,4 @@
-package cn.smthit.v4.web.web.exception;
+package cn.smthit.v4.web.exception;
 
 import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.ServiceException;

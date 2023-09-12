@@ -3,6 +3,9 @@
  */
 package cn.smthit.v4.framework.beetlsql.data;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +13,8 @@ import java.util.List;
  * @author Bean
  *
  */
+@Data
+@lombok.experimental.Accessors(chain = true)
 public class Page<T> {
 	private int currentPage;
 
@@ -29,46 +34,4 @@ public class Page<T> {
 		this.rows = rows;
 		this.totalPages = totalPages;
 	}
-	
-	public long getTotal() {
-		return total;
-	}
-
-	public Page<T> setTotal(long total) {
-		this.total = total;
-		return this;
-	}
-
-	public List<T> getRows() {
-		return rows;
-	}
-
-	public Page<T> setRows(List<T> rows) {
-		this.rows = rows;
-		return this;
-	}
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public Page<T> setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-		return this;
-	}
-
-	/**
-	 * @return the totalPage
-	 */
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	/**
-	 * @param totalPages the totalPage to set
-	 */
-	public Page<T> setTotalPages(int totalPages) {
-		this.totalPages = totalPages;
-		return this;
-	}	
 }

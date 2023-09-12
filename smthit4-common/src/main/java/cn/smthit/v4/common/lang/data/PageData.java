@@ -6,6 +6,10 @@ import lombok.experimental.Accessors;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 使用Page<?>类
+ * @param <T>
+ */
 @Data
 @Accessors(chain = true)
 public class PageData<T> {

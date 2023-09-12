@@ -15,6 +15,7 @@ import java.util.Map;
  * @author Bean
  * 使用Result<T>类来代替
  */
+@Deprecated
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @ToString

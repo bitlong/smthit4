@@ -13,7 +13,7 @@ import org.beetl.sql.core.page.PageResult;
 
 /**
  * @author Bean
- *
+ * 生成Page对象
  */
 public class PageKit {
 

@@ -17,7 +17,7 @@ import org.modelmapper.ModelMapper;
  * @author Bean
  *
  */
-public class ParamDTO implements IParamDTO {
+public class ParamDTO<U extends ParamDTO> implements IParamDTO {
 
 	/**
 	 * 构造器
@@ -26,7 +26,7 @@ public class ParamDTO implements IParamDTO {
 	 *
 	 * @param <C>
 	 */
-	public static class Builder<C extends ParamDTO> {
+	public static class Builder<C extends ParamDTO<ParamDTO>> {
 		private Class<C> cls;
 		
 		private Map<String, Object> prop1 = new HashMap<>();
@@ -41,13 +41,13 @@ public class ParamDTO implements IParamDTO {
 			this.cls = cls;
 		}
 		
-		public static <C extends ParamDTO>  Builder<C> builder(Class<C> cls) {
+		public static <C extends ParamDTO<ParamDTO>>  Builder<C> builder(Class<C> cls) {
 			Builder<C> builder = new Builder<>(cls);
 			builder.mapper = new ModelMapper();
 			return builder;
 		}
 		
-		public static <C extends ParamDTO>  Builder<C> builder(Class<C> cls, ModelMapper mapper) {
+		public static <C extends ParamDTO<ParamDTO>>  Builder<C> builder(Class<C> cls, ModelMapper mapper) {
 			Builder<C> builder = new Builder<>(cls);
 			builder.mapper = mapper;
 			return builder;

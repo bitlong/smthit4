@@ -7,6 +7,7 @@ package cn.smthit.v4.framework.beetlsql.data;
  * @author Bean
  *
  */
+@Deprecated
 public enum EnumOrder {
 	ASC("asc", "升序"),
 	DESC("desc", "降序");

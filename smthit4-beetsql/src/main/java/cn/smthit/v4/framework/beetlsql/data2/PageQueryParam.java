@@ -16,6 +16,7 @@ import lombok.Getter;
 /**
  * @author Bean 翻页查询的参数对象
  */
+@Deprecated
 @Data
 @lombok.experimental.Accessors(chain = true)
 public class PageQueryParam<C extends QueryParamDTO> {

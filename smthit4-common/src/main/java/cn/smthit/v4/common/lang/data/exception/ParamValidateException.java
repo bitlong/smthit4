@@ -1,16 +1,14 @@
 /**
  * 
  */
-package cn.smthit.v4.framework.beetlsql.data2;
+package cn.smthit.v4.common.lang.data.exception;
 
 import cn.smthit.v4.common.lang.exception.ServiceException;
-import lombok.Getter;
 
 /**
  * @author Bean
  *
  */
-@Deprecated
 public class ParamValidateException extends ServiceException {
 	private static final long serialVersionUID = 130940167912437540L;
 

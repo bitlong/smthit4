@@ -1,13 +1,12 @@
 /**
  * 
  */
-package cn.smthit.v4.framework.beetlsql.data2;
+package cn.smthit.v4.common.lang.data;
 
 /**
  * @author Bean
  *
  */
-@Deprecated
 public interface IParamDTO {
 
 	public void validate(Class<?> group);

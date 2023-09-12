@@ -1,7 +1,6 @@
 package cn.smthit.v4.web.core;
 
-import cn.smthit.v4.common.lang.core.PageParam;
-import cn.smthit.v4.common.lang.core.RangeCondition;
+import cn.smthit.v4.common.lang.data.RangeCondition;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

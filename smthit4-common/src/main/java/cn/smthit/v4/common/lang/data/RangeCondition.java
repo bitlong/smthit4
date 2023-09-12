@@ -1,4 +1,4 @@
-package cn.smthit.v4.common.lang.core;
+package cn.smthit.v4.common.lang.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

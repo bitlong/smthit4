@@ -10,6 +10,7 @@ import lombok.Data;
  *
  */
 @Data
+@Deprecated
 public class OrderBy {
 	private String field;
 	private EnumOrder order;

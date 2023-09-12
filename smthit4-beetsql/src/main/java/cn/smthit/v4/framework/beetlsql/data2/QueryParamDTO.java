@@ -18,6 +18,7 @@ import java.util.Set;
  * @author Bean
  *
  */
+@Deprecated
 public class QueryParamDTO extends ParamDTO {
 	private PageQueryParam<?> pageParam;
 	

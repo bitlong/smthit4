@@ -15,6 +15,7 @@ import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
  * @author Bean
  *
  */
+@Deprecated
 public interface IParamDTO {
 	/**
 	 * 验证参数的正确性

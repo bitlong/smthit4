@@ -10,6 +10,7 @@ import java.util.List;
  * @author Bean
  *
  */
+@Deprecated
 public class Pagination<T> {
 	private int currentPage;
 

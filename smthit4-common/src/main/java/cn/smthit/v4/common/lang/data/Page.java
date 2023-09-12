@@ -1,19 +1,17 @@
 /**
  * 
  */
-package cn.smthit.v4.framework.beetlsql.data;
+package cn.smthit.v4.common.lang.data;
 
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Bean
- *
+ * 和PageData的pageCount不一养，
  */
-@Deprecated
 @Data
 @lombok.experimental.Accessors(chain = true)
 public class Page<T> {

@@ -13,6 +13,7 @@ import org.beetl.sql.core.page.PageResult;
  * @author Bean
  *
  */
+@Deprecated
 public class PaginationUtils {
 
 	private PaginationUtils() {

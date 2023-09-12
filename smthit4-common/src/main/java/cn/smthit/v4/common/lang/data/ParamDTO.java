@@ -1,15 +1,15 @@
 /**
  * 
  */
-package cn.smthit.v4.framework.beetlsql.data2;
+package cn.smthit.v4.common.lang.data;
 
+import cn.smthit.v4.common.lang.data.exception.ParamValidateException;
 import cn.smthit.v4.common.lang.validator.CheckKit;
 
 /**
  * @author Bean
  *
  */
-@Deprecated
 public class ParamDTO implements IParamDTO {
 
 	protected ParamDTO() {

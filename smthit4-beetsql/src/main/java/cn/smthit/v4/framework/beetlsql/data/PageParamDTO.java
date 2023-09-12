@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
  * @author Bean
  *
  */
+@Deprecated
 @Data
 public class PageParamDTO implements IParamDTO {
 	/**

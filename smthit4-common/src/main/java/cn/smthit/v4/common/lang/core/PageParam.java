@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PageParam implements IParam {
+public class PageParam implements IPageParam {
 
-    private Integer pageSize = 30;
+    private int pageSize = 30;
 
-    private Integer pageNo = 1;
-
+    private int pageNo = 1;
 }

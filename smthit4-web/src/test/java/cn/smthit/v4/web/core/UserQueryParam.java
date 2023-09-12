@@ -1,5 +1,8 @@
 package cn.smthit.v4.web.core;
 
+import cn.smthit.v4.common.lang.core.IParam;
+import cn.smthit.v4.common.lang.core.RangeCondition;
+import cn.smthit.v4.common.lang.core.SetCondition;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +17,7 @@ import java.util.List;
  * @date 2023/9/8
  */
 @Data
-public class UserQueryParam extends QueryParam {
+public class UserQueryParam extends IParam {
     /**
      * 等值查询
      */

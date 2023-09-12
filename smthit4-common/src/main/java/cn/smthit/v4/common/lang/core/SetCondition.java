@@ -1,4 +1,4 @@
-package cn.smthit.v4.web.core;
+package cn.smthit.v4.common.lang.core;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * TODO
@@ -16,7 +18,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RangeCondition<T> implements Serializable {
-    private T min;
-    private T max;
+public class SetCondition<T> implements Serializable  {
+    /**
+     * 集合的值
+     */
+    private Set<T> value = new HashSet<>();
 }

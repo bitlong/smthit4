@@ -10,7 +10,9 @@ public interface JobExecutor {
      * 任务名称
      * @return
      */
-    String getName();
+    String getJobName();
+
+    String getJobKey();
 
     /**
      * 任务执行接口

@@ -66,4 +66,7 @@ public class MapperKit {
         return strictMapper;
     }
 
+    public static ModelMapper mapper() {
+        return mapper;
+    }
 }

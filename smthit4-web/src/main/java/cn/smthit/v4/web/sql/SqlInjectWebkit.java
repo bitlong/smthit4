@@ -2,12 +2,9 @@ package cn.smthit.v4.web.sql;
 
 import cn.hutool.crypto.SecureUtil;
 
-import cn.hutool.crypto.SecureUtil;
 import cn.smthit.v4.common.lang.sql.SqlInjectKit;
 import lombok.extern.slf4j.Slf4j;
 import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * WEB参数签名和检查
@@ -26,6 +23,7 @@ public class SqlInjectWebkit {
      */
     public static void checkDictTableSign(String dictCode, String sign, HttpServletRequest request) {
         //表字典SQL注入漏洞,签名校验
+
         String accessToken = request.getHeader("X-Access-Token");
 
         String signStr = dictCode + SqlInjectKit.TABLE_DICT_SIGN_SALT + accessToken;

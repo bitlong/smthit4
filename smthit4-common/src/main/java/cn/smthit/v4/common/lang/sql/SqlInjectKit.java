@@ -1,5 +1,6 @@
 package cn.smthit.v4.common.lang.sql;
 
+import cn.smthit.v4.common.lang.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +31,7 @@ public class SqlInjectKit {
      * @param value
      * @return
      */
-    public static void filterContent(String value) {
+    public static void checkXssSqlParam(String value) {
         if (value == null || "".equals(value)) {
             return;
         }
@@ -41,10 +42,9 @@ public class SqlInjectKit {
             if (value.indexOf(xssArr[i]) > -1) {
                 log.info("请注意，存在SQL注入关键词---> {}", xssArr[i]);
                 log.info("请注意，值可能存在SQL注入风险!---> {}", value);
-                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
+                throw new ServiceException("请注意，值可能存在SQL注入风险!--->" + value);
             }
         }
-        return;
     }
 
     /**
@@ -53,7 +53,7 @@ public class SqlInjectKit {
      * @param values
      * @return
      */
-    public static void filterContent(String[] values) {
+    public static void checkXssSqlParam(String[] values) {
         String[] xssArr = xssStr.split("\\|");
         for (String value : values) {
             if (value == null || "".equals(value)) {
@@ -63,78 +63,26 @@ public class SqlInjectKit {
             value = value.toLowerCase();
             for (int i = 0; i < xssArr.length; i++) {
                 if (value.indexOf(xssArr[i]) > -1) {
-                    log.info("请注意，存在SQL注入关键词---> {}", xssArr[i]);
-                    log.info("请注意，值可能存在SQL注入风险!---> {}", value);
-                    throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
+                    log.warn("请注意，存在SQL注入关键词---> {}", xssArr[i]);
+                    log.warn("请注意，值可能存在SQL注入风险!---> {}", value);
+                    throw new ServiceException("请注意，值可能存在SQL注入风险!--->" + value);
                 }
             }
         }
-        return;
     }
 
     /**
-     * 注入过滤
-     * @param value
-     * @return
+     * SQL参数校验
+     * @param paramVal ep: "or 1=1"
      */
-    @Deprecated
-    public static void specialFilterContent(String value) {
-        String specialXssStr = " exec | insert | select | delete | update | drop | count | chr | mid | master | truncate | char | declare |;|+|";
-        String[] xssArr = specialXssStr.split("\\|");
-
-        if (value == null || "".equals(value)) {
-            return;
-        }
-        // 统一转为小写
-        value = value.toLowerCase();
-        for (int i = 0; i < xssArr.length; i++) {
-            if (value.indexOf(xssArr[i]) > -1 || value.startsWith(xssArr[i].trim())) {
-                log.info("请注意，存在SQL注入关键词---> {}", xssArr[i]);
-                log.info("请注意，值可能存在SQL注入风险!---> {}", value);
-                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
-            }
-        }
-        return;
-    }
-
-
-    /**
-     * 注入过滤
-     * @param value
-     * @return
-     */
-    @Deprecated
-    public static void specialFilterContentForOnlineReport(String value) {
-        String specialXssStr = " exec | insert | delete | update | drop | chr | mid | master | truncate | char | declare |";
-        String[] xssArr = specialXssStr.split("\\|");
-        if (value == null || "".equals(value)) {
-            return;
-        }
-        // 统一转为小写
-        value = value.toLowerCase();
-        for (int i = 0; i < xssArr.length; i++) {
-            if (value.indexOf(xssArr[i]) > -1 || value.startsWith(xssArr[i].trim())) {
-                log.info("请注意，存在SQL注入关键词---> {}", xssArr[i]);
-                log.info("请注意，值可能存在SQL注入风险!---> {}", value);
-                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
-            }
-        }
-        return;
-    }
-
-    /**
-     * 参数校验
-     * @param str ep: "or 1=1"
-     */
-    public static boolean isSqlValid(String str) {
-        Matcher matcher = sqlPattern.matcher(str);
+    public static boolean checkSqlParam(String paramVal) {
+        Matcher matcher = sqlPattern.matcher(paramVal);
         if (matcher.find()) {
             //获取非法字符：or
-            log.info("参数存在非法字符，请确认："+matcher.group());
+            log.warn("参数存在非法字符，请确认：" + matcher.group());
             return false;
         }
 
         return true;
     }
-
 }

@@ -16,6 +16,8 @@ import java.util.Map;
 public class JobContext {
     private Map<String, Object> content = new HashMap<>();
 
+    private StringBuffer logBuffer = new StringBuffer();
+
     @Getter
     @Setter
     private Date startTime;
@@ -30,5 +32,9 @@ public class JobContext {
 
     public Object get(String key) {
         return content.get(key);
+    }
+
+    public void appendLog(String log) {
+        logBuffer.append(log).append("\n");
     }
 }

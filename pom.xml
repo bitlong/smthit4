@@ -38,7 +38,7 @@
 
         <jackson.version>2.10.1</jackson.version>
         <joda-time.version>2.10.5</joda-time.version>
-        <hutool.version>5.2.5</hutool.version>
+        <hutool.version>5.8.22</hutool.version>
         <guava.version>28.2-jre</guava.version>
         <modelmapper.version>3.1.1</modelmapper.version>
         <fastutil.version>8.3.1</fastutil.version>

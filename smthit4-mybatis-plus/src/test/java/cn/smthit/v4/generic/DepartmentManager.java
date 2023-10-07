@@ -1,6 +1,5 @@
 package cn.smthit.v4.generic;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**

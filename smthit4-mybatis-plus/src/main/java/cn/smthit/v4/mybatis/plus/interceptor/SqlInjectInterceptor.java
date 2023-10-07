@@ -38,6 +38,8 @@ public class SqlInjectInterceptor implements Interceptor {
 
         if (null != parameterObject) {
             MetaObject mappedStatement = SystemMetaObject.forObject(invocation.getArgs()[0]);
+
+            //动态SQL
             if (mappedStatement.getValue("sqlSource") instanceof DynamicSqlSource) {
                 Set<String> parameterKeys = (Set<String>) cache.get((String) mappedStatement.getValue("id"));
                 if (null == parameterKeys) {
@@ -45,6 +47,7 @@ public class SqlInjectInterceptor implements Interceptor {
                     parameterKeys = parseSqlNode(rootSqlNode);
                     cache.put((String) mappedStatement.getValue("id"), parameterKeys);
                 }
+
                 if (null != parameterKeys && !parameterKeys.isEmpty()) {
                     MetaObject parameterMo = SystemMetaObject.forObject(parameterObject);
                     for (String parameterKey : parameterKeys) {
@@ -58,6 +61,7 @@ public class SqlInjectInterceptor implements Interceptor {
                 }
             }
         }
+
         return invocation.proceed();
     }
 
@@ -78,7 +82,9 @@ public class SqlInjectInterceptor implements Interceptor {
     private static Object process(Object value) {
         for (int i = 0; i < KEYWORDS.length; i++) {
             String str = KEYWORDS[i];
+            //i==11 or 之后的串，包含or。关键词
             if (i > 11) {
+                //TODO 这里需要优化
                 if (Pattern.compile("\\s+").matcher(value.toString()).find()) {
                     for (String s : value.toString().split("\\s+")) {
                         if (StringUtils.equalsIgnoreCase(s, str)) {
@@ -88,6 +94,7 @@ public class SqlInjectInterceptor implements Interceptor {
                     }
                 }
             } else if (value.toString().toLowerCase().contains(str)) {
+                //i <=11 or之前的串，特殊的符号，直接过滤掉
                 value = value.toString().replaceAll(Pattern.quote(str), "N/A");
                 log.warn("sql脚本中特殊字符【{}】已被过滤", str);
             }

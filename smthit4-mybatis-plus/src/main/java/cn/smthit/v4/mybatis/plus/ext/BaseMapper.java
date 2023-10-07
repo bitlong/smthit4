@@ -18,7 +18,7 @@ import java.util.Map;
  * @author: Bean
  * @date: 2022/9/19  1:18
  */
-public interface BaseMapper<T> extends Mapper<T> {
+public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
     int insert(T entity);
 
     int deleteById(Serializable id);

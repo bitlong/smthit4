@@ -3,6 +3,7 @@ package cn.smthit.v4.common.lang.data;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class PageData<T> {
+public class PageData<T> implements Serializable {
     /**
      * 当前页
      */

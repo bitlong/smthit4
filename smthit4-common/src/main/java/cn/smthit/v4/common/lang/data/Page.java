@@ -5,6 +5,7 @@ package cn.smthit.v4.common.lang.data;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Data
 @lombok.experimental.Accessors(chain = true)
-public class Page<T> {
+public class Page<T> implements Serializable {
 	private int currentPage;
 
 	private long total;

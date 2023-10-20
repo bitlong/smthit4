@@ -1,6 +1,7 @@
 package cn.smthit.v4.web.exception;
 
 import cn.smthit.v4.common.lang.data.Result;
+import cn.smthit.v4.common.lang.exception.AssertException;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 /**
@@ -41,6 +43,7 @@ public class DefaultExceptionHandler {
 
         StringBuffer sb = new StringBuffer();
 
+        // 异常信息可以增加采集机制 类似于Sentry
         if (throwable instanceof ServiceException) {
             sb.append(throwable.getMessage());
             log.info("业务访问, 异常信息：" + throwable.getMessage(), throwable);
@@ -83,11 +86,23 @@ public class DefaultExceptionHandler {
                 msg = DEFAULT_ERROR_MSG;
             }
 
+            //以下用语可以做成配置项
             if(throwable instanceof ServiceException) {
                 ServiceException exp = (ServiceException) throwable;
-                printWriter.write(GsonKit.toJson(Result.failed(exp)));
+                Result<?> result = Result.failed(exp);
+                result.message(Optional.ofNullable(exp.getMessage()).orElse("服务访问异常"));
+                result.detailMessage(Optional.ofNullable(exp.getDetailMessage()).orElse("服务操作异常，请联系管理员"));
+                printWriter.write(GsonKit.toJson(result));
+            } else if(throwable instanceof AssertException) {
+                AssertException exp = (AssertException) throwable;
+                Result<?> result = Result.failed(exp);
+                result.message(Optional.ofNullable(exp.getMessage()).orElse("数据验证失败"));
+                result.detailMessage(Optional.ofNullable(exp.getDetailMessage()).orElse("数据验证失败,请检查接口参数是否正确"));
             } else {
-                printWriter.write(GsonKit.toJson(Result.failed().message(msg)));
+                Result<?> result = Result.failed();
+                result.message("接口访问异常, 当前服务不可用");
+                result.detailMessage(Optional.ofNullable(throwable.getMessage()).orElse("接口操作异常，请联系管理员"));
+                printWriter.write(GsonKit.toJson(result));
             }
 
             printWriter.flush();

@@ -2,6 +2,7 @@ package cn.smthit.v4.web.exception;
 
 import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.AssertException;
+import cn.smthit.v4.common.lang.exception.DalException;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
@@ -55,6 +56,11 @@ public class DefaultExceptionHandler {
             AssertException exp = (AssertException) throwable;
             String msg = Optional.ofNullable(exp.getMessage()).orElse("数据验证失败");
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据验证失败,请检查接口参数是否正确");
+            return outputException(msg, msgDetail, null, throwable, request, response);
+        } else if(throwable instanceof DalException) {
+            DalException exp = (DalException) throwable;
+            String msg = Optional.ofNullable(exp.getMessage()).orElse("数据操作失败");
+            String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据操作失败,请检查业务逻辑是否正确");
             return outputException(msg, msgDetail, null, throwable, request, response);
         } else {
             sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));

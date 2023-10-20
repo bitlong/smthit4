@@ -3,6 +3,7 @@ package cn.smthit.v4.web.exception;
 import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.AssertException;
 import cn.smthit.v4.common.lang.exception.DalException;
+import cn.smthit.v4.common.lang.exception.ErrorCode;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
@@ -55,21 +56,21 @@ public class DefaultExceptionHandler {
             log.info("业务访问, 异常信息：" + throwable.getMessage(), throwable);
             String msg = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常");
             String msgDetail = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常，未提供错误明细，请联系管理员");
-            return outputException(msg, msgDetail, null, throwable, request, response);
+            return outputException(msg, msgDetail, exp.getCode(), throwable, request, response);
         } else if(throwable instanceof AssertException) {
             AssertException exp = (AssertException) throwable;
             String msg = Optional.ofNullable(exp.getMessage()).orElse("数据验证失败");
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据验证失败,请检查接口参数是否正确");
-            return outputException(msg, msgDetail, null, throwable, request, response);
+            return outputException(msg, msgDetail, exp.getCode(), throwable, request, response);
         } else if(throwable instanceof DalException) {
             DalException exp = (DalException) throwable;
             String msg = Optional.ofNullable(exp.getMessage()).orElse("数据操作失败");
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据操作失败,请检查业务逻辑是否正确");
-            return outputException(msg, msgDetail, null, throwable, request, response);
+            return outputException(msg, msgDetail, exp.getCode(), throwable, request, response);
         } else {
             sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
             log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);
-            return outputException("服务不可用，请查看明细，联系管理员解决", sb.toString(), null, throwable, request, response);
+            return outputException("服务不可用，请查看明细，联系管理员解决", sb.toString(), ErrorCode.DEFAULT_ERROR.getValue(), throwable, request, response);
         }
     }
 

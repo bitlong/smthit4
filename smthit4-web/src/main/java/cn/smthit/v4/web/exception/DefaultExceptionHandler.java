@@ -82,7 +82,7 @@ public class DefaultExceptionHandler {
      * @param response
      * @return
      */
-    public HandleResult handleExtraException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) {
+    public HandleResult handleExtraException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return new HandleResult(false, null);
     }
 

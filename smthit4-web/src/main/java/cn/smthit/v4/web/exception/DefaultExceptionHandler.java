@@ -45,14 +45,22 @@ public class DefaultExceptionHandler {
 
         // 异常信息可以增加采集机制 类似于Sentry
         if (throwable instanceof ServiceException) {
+            ServiceException exp = (ServiceException) throwable;
             sb.append(throwable.getMessage());
             log.info("业务访问, 异常信息：" + throwable.getMessage(), throwable);
+            String msg = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常");
+            String msgDetail = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常，未提供错误明细，请联系管理员");
+            return outputException(msg, msgDetail, null, throwable, request, response);
+        } else if(throwable instanceof AssertException) {
+            AssertException exp = (AssertException) throwable;
+            String msg = Optional.ofNullable(exp.getMessage()).orElse("数据验证失败");
+            String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据验证失败,请检查接口参数是否正确");
+            return outputException(msg, msgDetail, null, throwable, request, response);
         } else {
             sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
             log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);
+            return outputException("服务不可用，请查看明细，联系管理员解决", sb.toString(), null, throwable, request, response);
         }
-
-        return outputException(sb.toString(), throwable, request, response);
     }
 
     /**
@@ -72,39 +80,27 @@ public class DefaultExceptionHandler {
             sj.add(error.getField() + ":" + error.getDefaultMessage());
         });
 
-        return outputException(sj.toString(), exp, request, response);
+        return outputException("接口参数验证失败", sj.toString(), null, exp, request, response);
     }
 
-    private Object outputException(String message, Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private Object outputException(String message, String detailMessage, String code,
+                                   Throwable throwable,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) throws IOException {
+        message = Optional.ofNullable(message).orElse("服务访问异常");
+        detailMessage = Optional.ofNullable(detailMessage).orElse("服务操作异常，请联系管理员");
+
         if (WebKit.isAjaxRequest(request) || WebKit.isJsonRequest(request)) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             PrintWriter printWriter = response.getWriter();
 
-            String msg = throwable.getMessage();
-            if (StringUtils.isEmpty(msg)) {
-                msg = DEFAULT_ERROR_MSG;
-            }
+            Result<?> result = Result.failed()
+                    .message(message)
+                    .detailMessage(detailMessage)
+                    .code(Optional.ofNullable(code).orElse(Result.DEFAULT_ERROR));
 
-            //以下用语可以做成配置项
-            if(throwable instanceof ServiceException) {
-                ServiceException exp = (ServiceException) throwable;
-                Result<?> result = Result.failed(exp);
-                result.message(Optional.ofNullable(exp.getMessage()).orElse("服务访问异常"));
-                result.detailMessage(Optional.ofNullable(exp.getDetailMessage()).orElse("服务操作异常，请联系管理员"));
-                printWriter.write(GsonKit.toJson(result));
-            } else if(throwable instanceof AssertException) {
-                AssertException exp = (AssertException) throwable;
-                Result<?> result = Result.failed(exp);
-                result.message(Optional.ofNullable(exp.getMessage()).orElse("数据验证失败"));
-                result.detailMessage(Optional.ofNullable(exp.getDetailMessage()).orElse("数据验证失败,请检查接口参数是否正确"));
-            } else {
-                Result<?> result = Result.failed();
-                result.message("接口访问异常, 当前服务不可用");
-                result.detailMessage(Optional.ofNullable(throwable.getMessage()).orElse("接口操作异常，请联系管理员"));
-                printWriter.write(GsonKit.toJson(result));
-            }
-
+            printWriter.write(GsonKit.toJson(result));
             printWriter.flush();
             printWriter.close();
 
@@ -122,8 +118,9 @@ public class DefaultExceptionHandler {
             }
 
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("exception", throwable);
             modelAndView.addObject("message", message);
+            modelAndView.addObject("detailMessage", detailMessage);
+            modelAndView.addObject("exception", throwable);
             modelAndView.addObject("stackTrace", stackTrace);
 
             modelAndView.setViewName("/errors/500");

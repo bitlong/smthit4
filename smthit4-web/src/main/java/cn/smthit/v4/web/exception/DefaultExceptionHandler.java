@@ -62,11 +62,28 @@ public class DefaultExceptionHandler {
             String msg = Optional.ofNullable(exp.getMessage()).orElse("数据操作失败");
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据操作失败,请检查业务逻辑是否正确");
             return outputException(msg, msgDetail, null, throwable, request, response);
+        }
+
+        Object retObject = null;
+        HandleResult handleResult = handleExtraException(throwable, request, response);
+        if(handleResult.handled) {
+            return handleResult.result;
         } else {
             sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
             log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);
             return outputException("服务不可用，请查看明细，联系管理员解决", sb.toString(), null, throwable, request, response);
         }
+    }
+
+    /**
+     * 重载该方法，添加默认的处理逻辑
+     * @param throwable
+     * @param request
+     * @param response
+     * @return
+     */
+    public HandleResult handleExtraException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) {
+        return new HandleResult(false, null);
     }
 
     /**
@@ -89,7 +106,7 @@ public class DefaultExceptionHandler {
         return outputException("接口参数验证失败", sj.toString(), null, exp, request, response);
     }
 
-    private Object outputException(String message, String detailMessage, String code,
+    protected Object outputException(String message, String detailMessage, String code,
                                    Throwable throwable,
                                    HttpServletRequest request,
                                    HttpServletResponse response) throws IOException {

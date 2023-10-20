@@ -41,6 +41,10 @@ public class DefaultExceptionHandler {
      */
     @ExceptionHandler(value = {ServiceException.class, Exception.class, Error.class})
     public Object serviceException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HandleResult handleResult = handleExtraException(throwable, request, response);
+        if(handleResult.handled) {
+            return handleResult.result;
+        }
 
         StringBuffer sb = new StringBuffer();
 
@@ -62,12 +66,6 @@ public class DefaultExceptionHandler {
             String msg = Optional.ofNullable(exp.getMessage()).orElse("数据操作失败");
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据操作失败,请检查业务逻辑是否正确");
             return outputException(msg, msgDetail, null, throwable, request, response);
-        }
-
-        Object retObject = null;
-        HandleResult handleResult = handleExtraException(throwable, request, response);
-        if(handleResult.handled) {
-            return handleResult.result;
         } else {
             sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
             log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);

@@ -55,7 +55,7 @@ public class DefaultExceptionHandler {
             sb.append(throwable.getMessage());
             log.info("业务访问, 异常信息：" + throwable.getMessage(), throwable);
             String msg = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常");
-            String msgDetail = Optional.ofNullable(exp.getMessage()).orElse("服务访问异常，未提供错误明细，请联系管理员");
+            String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("服务访问异常，未提供错误明细，请联系管理员");
             return outputException(msg, msgDetail, exp.getCode(), throwable, request, response);
         } else if(throwable instanceof AssertException) {
             AssertException exp = (AssertException) throwable;

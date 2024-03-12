@@ -586,13 +586,13 @@
                 <snapshotRepository>
                     <id>maven-xueda-snapshot</id>
                     <name>maven-xueda-snapshot</name>
-                    <url>http://nexus.xueda.cloud/repository/maven-xueda-snapshots/</url>
+                    <url>https://nexus.xueda.cloud/repository/maven-xueda-snapshots/</url>
                     <uniqueVersion>true</uniqueVersion>
                 </snapshotRepository>
                 <repository>
                     <id>maven-xueda-releases</id>
                     <name>maven-xueda-releases</name>
-                    <url>http://nexus.xueda.cloud/repository/maven-xueda-releases/</url>
+                    <url>https://nexus.xueda.cloud/repository/maven-xueda-releases/</url>
                 </repository>
             </distributionManagement>
         </profile>

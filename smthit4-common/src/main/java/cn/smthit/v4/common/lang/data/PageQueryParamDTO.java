@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.common.lang.data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @lombok.experimental.Accessors(chain = true)
-public class PageQueryParamDTO<T> extends  PageParamDTO{
+public class PageQueryParamDTO<T> extends  PageParamDTO {
 
 	/**
 	 * 参数对象

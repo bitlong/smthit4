@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.framework.beetlsql.data;
 
@@ -20,7 +20,6 @@ import org.modelmapper.ModelMapper;
  * @author Bean
  *
  */
-@Deprecated
 @Data
 public class PageParamDTO implements IParamDTO {
 	/**
@@ -32,7 +31,7 @@ public class PageParamDTO implements IParamDTO {
 	 * 每页大小
 	 */
 	private int pageSize;
-	
+
 	/**
 	  *  创建分页请求参数对象
 	 * @return
@@ -45,16 +44,16 @@ public class PageParamDTO implements IParamDTO {
 
 	/**
 	 * 构造器
-	 * 
+	 *
 	 * @author Bean
 	 *
 	 * @param <C>
 	 */
 	public static class Builder<C extends PageParamDTO> {
 		private Class<C> cls;
-		
+
 		private Map<String, Object> prop1 = new HashMap<>();
-		
+
 		private Map<Property<?, ?>, Object> prop2 = new HashMap<>();
 
 		private ModelMapper mapper;
@@ -66,11 +65,11 @@ public class PageParamDTO implements IParamDTO {
 
 		@Getter
 		private int pageSize;
-		
+
 		private Builder(Class<C> cls) {
 			this.cls = cls;
 		}
-		
+
 		public static <C extends PageParamDTO>  Builder<C> builder(Class<C> cls) {
 			Builder<C> builder = new Builder<>(cls);
 			builder.mapper = new ModelMapper();
@@ -92,17 +91,17 @@ public class PageParamDTO implements IParamDTO {
 			prop2.put(property, value);
 			return this;
 		}
-		
+
 		public Builder<C> property(String propertyName, Object value) {
 			prop1.put(propertyName, value);
 			return this;
 		}
-		
+
 		public Builder<C> pageNumber(Integer pageNumber) {
 			this.pageNumber = pageNumber;
 			return this;
 		}
-		
+
 		public Builder<C> pageSize(Integer pageSize) {
 			this.pageSize = pageSize;
 			return this;
@@ -112,7 +111,7 @@ public class PageParamDTO implements IParamDTO {
 			this.mapObject = source;
 			return this;
 		}
-		
+
 		public C build() {
 			try {
 				C param = cls.newInstance();
@@ -124,7 +123,7 @@ public class PageParamDTO implements IParamDTO {
 				prop1.entrySet().forEach(entry-> {
 					BeanKit.setBeanProperty(param, entry.getValue(), entry.getKey());
 				});
-				
+
 				prop2.entrySet().forEach(entry-> {
 					Property<?, ?> property = entry.getKey();
 					String name = ClassKit.getFieldName(property);
@@ -142,7 +141,7 @@ public class PageParamDTO implements IParamDTO {
 				throw new ParamException(e.getMessage(), "");
 			}
 		}
-		
+
 		public C build(Class<?> group) {
 			try {
 				C param = cls.newInstance();
@@ -154,7 +153,7 @@ public class PageParamDTO implements IParamDTO {
 				prop1.entrySet().forEach(entry-> {
 					BeanKit.setBeanProperty(param, entry.getValue(), entry.getKey());
 				});
-				
+
 				prop2.entrySet().forEach(entry-> {
 					Property<?, ?> property = entry.getKey();
 					String name = ClassKit.getFieldName(property);
@@ -167,7 +166,7 @@ public class PageParamDTO implements IParamDTO {
 				param.setPageSize(this.pageSize);
 
 				param.validate(group);
-				
+
 				return param;
 			} catch (Exception exp) {
 				throw new ParamException("构建DTO出错, 原因：" + exp.getMessage(), exp);

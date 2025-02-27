@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.framework.beetlsql.data;
 
@@ -15,11 +15,10 @@ import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
  * @author Bean
  *
  */
-@Deprecated
 public interface IParamDTO {
 	/**
 	 * 验证参数的正确性
-	 * 
+	 *
 	 * @param group
 	 */
 	default public void validate(Class<?> group) throws ParamException {

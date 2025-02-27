@@ -31,7 +31,7 @@ import java.util.StringJoiner;
  * @author haoyun.zheng
  */
 @Slf4j
-public class DefaultExceptionHandler {
+public abstract class DefaultExceptionHandler {
 
     final static String DEFAULT_ERROR_MSG = "当前请求出现错误,请重试或者联系管理员";
 
@@ -81,10 +81,7 @@ public class DefaultExceptionHandler {
      * @param response
      * @return
      */
-    public HandleResult handleExtraException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return new HandleResult(false, null);
-    }
-
+    public abstract HandleResult handleExtraException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) throws IOException;
     /**
      * 全局异常中处理BindException，并返回
      * @param exp

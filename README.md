@@ -22,4 +22,3 @@ mvn release:clean release:prepare
 ## 更新记录
 * 2023.09 smthit-beetsql 增加多租户
 * 
-* 

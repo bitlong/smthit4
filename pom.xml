@@ -70,7 +70,8 @@
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
         <beetl-starter.version>3.30.14-RELEASE</beetl-starter.version>
-        <beetl.version>3.20.0-RELEASE</beetl.version>
+        <beetl.version>3.30.14-RELEASE</beetl.version>
+        <beetlsql.version>3.30.14-RELEASE</beetlsql.version>
     </properties>
     <dependencies>
         <dependency>

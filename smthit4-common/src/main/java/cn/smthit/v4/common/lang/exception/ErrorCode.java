@@ -4,8 +4,6 @@ import cn.smthit.v4.common.lang.enums.IEnumStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * @author Bean
  */

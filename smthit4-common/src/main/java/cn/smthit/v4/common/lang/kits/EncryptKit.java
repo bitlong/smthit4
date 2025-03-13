@@ -1,8 +1,7 @@
 package cn.smthit.v4.common.lang.kits;
 
+import com.mchange.util.Base64Encoder;
 import lombok.extern.slf4j.Slf4j;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -11,12 +10,13 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 
 @Slf4j
 @SuppressWarnings("restriction")
 public class EncryptKit {
-	
+
 	public static String SHA1(String decript) {
 		try {
 			MessageDigest digest = MessageDigest
@@ -98,7 +98,7 @@ public class EncryptKit {
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
 			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
 			secureRandom.setSeed(password.getBytes());
-			
+
 			kgen.init(128, secureRandom);
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
@@ -106,9 +106,9 @@ public class EncryptKit {
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
 			byte[] byteContent = content.getBytes("utf-8");
 			cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
-			
+
 			byte[] result = cipher.doFinal(byteContent);
-			
+
 			return result; // 加密
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -118,9 +118,9 @@ public class EncryptKit {
 
 	public static byte[] decryptAES(byte[] content, String password) {
 		try {
-			
+
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			
+
 			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
 			secureRandom.setSeed(password.getBytes());
 
@@ -130,9 +130,9 @@ public class EncryptKit {
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
 			cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
-			
+
 			byte[] result = cipher.doFinal(content);
-			
+
 			return result; // 加密
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,14 +144,14 @@ public class EncryptKit {
 
 	public static byte[] decryptBASE64(String key) {
 		try {
-			return new BASE64Decoder().decodeBuffer(key);
+			return Base64.getUrlDecoder().decode(key);
 		} catch (Exception e) {
 		}
 		return null;
 	}
 
 	public static String encryptBASE64(byte[] key) {
-		return (new BASE64Encoder()).encodeBuffer(key);
-		
+		return Base64.getUrlEncoder().encodeToString(key);
+
 	}
 }

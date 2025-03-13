@@ -5,6 +5,8 @@ import cn.smthit.v4.common.lang.exception.ErrorCode;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.feign.FeignConstants;
 import cn.smthit.v4.feign.kits.SerializalbeKit;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -15,8 +17,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -31,8 +31,27 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
     private int order = Ordered.LOWEST_PRECEDENCE;
 
     @Override
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exp) {
+    public int getOrder() {
+        return order;
+    }
 
+    /**
+     * @param exp
+     * @param method
+     * @return
+     */
+    private boolean check(Exception exp, HandlerMethod method) {
+        if (exp instanceof ServiceException) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         Object handler, Exception exp) {
         if(exp instanceof ServiceException) {
             log.error(String.format("异常信息: %s \n %s", exp.getMessage(), ((ServiceException) exp).getDetailMessage()), exp);
         } else {
@@ -72,23 +91,5 @@ public class FeignExceptionHandler implements HandlerExceptionResolver, Ordered 
         }
 
         return new ModelAndView();
-    }
-
-    @Override
-    public int getOrder() {
-        return order;
-    }
-
-    /**
-     * @param exp
-     * @param method
-     * @return
-     */
-    private boolean check(Exception exp, HandlerMethod method) {
-        if (exp instanceof ServiceException) {
-            return true;
-        }
-
-        return false;
     }
 }

@@ -2,6 +2,7 @@ package cn.smthit.v4.mq.rabbitmq.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -21,6 +22,7 @@ public class RabbitConfiguration {
     @Bean
     public RabbitTemplate createRabbitTemplate(ConnectionFactory factory) {
         RabbitTemplate template = new RabbitTemplate();
+
         template.setConnectionFactory(factory);
         template.setMessageConverter(new Jackson2JsonMessageConverter());
         template.setMandatory(true);
@@ -32,14 +34,10 @@ public class RabbitConfiguration {
             }
         });
 
-        template.setReturnCallback(new RabbitTemplate.ReturnCallback() {
+        template.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
             @Override
-            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routeKey) {
-                log.debug("Return Callback, Message: " + message +
-                        ", replyCode: " + replyCode +
-                        ", replyText: " + replyText +
-                        ", exchange: " + exchange +
-                        ", routeKey: " + routeKey);
+            public void returnedMessage(ReturnedMessage returnedMessage) {
+                log.debug(returnedMessage.toString());
             }
         });
 

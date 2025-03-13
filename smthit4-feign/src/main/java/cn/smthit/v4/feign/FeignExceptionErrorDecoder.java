@@ -6,7 +6,6 @@ import cn.smthit.v4.feign.exception.ErrorCode;
 import cn.smthit.v4.feign.exception.FeignClientException;
 import cn.smthit.v4.feign.exception.FeignServerException;
 import cn.smthit.v4.feign.kits.SerializalbeKit;
-import com.netflix.client.ClientException;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;

@@ -1,5 +1,6 @@
 package cn.smthit.v4.common.lang.enums.http;
 
+import jakarta.annotation.PostConstruct;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -10,14 +11,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
-import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 import java.security.NoSuchAlgorithmException;
 
 public class HttpConnectionManager {
 
     PoolingHttpClientConnectionManager cm = null;
-    
+
     @PostConstruct
     public void init() {
         LayeredConnectionSocketFactory sslsf = null;
@@ -27,7 +27,7 @@ public class HttpConnectionManager {
             e.printStackTrace();
         }
 
-        
+
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
                 .register("https", sslsf)
                 .register("http", new PlainConnectionSocketFactory())
@@ -37,11 +37,11 @@ public class HttpConnectionManager {
         cm.setDefaultMaxPerRoute(20);
     }
 
-    public CloseableHttpClient getHttpClient(){       
+    public CloseableHttpClient getHttpClient(){
         CloseableHttpClient httpClient = HttpClients.custom()
                 .setConnectionManager(cm)
-                .build();          
-        
+                .build();
+
         /*CloseableHttpClient httpClient = HttpClients.createDefault();//如果不采用连接池就是这种方式获取连接*/
         return httpClient;
     }

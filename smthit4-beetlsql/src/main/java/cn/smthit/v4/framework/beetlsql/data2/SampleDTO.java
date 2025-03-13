@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.framework.beetlsql.data2;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Bean

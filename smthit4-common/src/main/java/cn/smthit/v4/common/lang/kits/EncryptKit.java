@@ -1,6 +1,5 @@
 package cn.smthit.v4.common.lang.kits;
 
-import com.mchange.util.Base64Encoder;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;

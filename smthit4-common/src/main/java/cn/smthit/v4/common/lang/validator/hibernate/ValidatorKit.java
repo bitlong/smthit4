@@ -2,12 +2,11 @@ package cn.smthit.v4.common.lang.validator.hibernate;
 
 
 
+
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.hibernate.validator.HibernateValidator;
-
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 
 /**
  * @description: ...
@@ -20,6 +19,7 @@ public class ValidatorKit {
         ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
                 .configure()
                 .buildValidatorFactory();
+
 
         return validatorFactory.getValidator();
     }

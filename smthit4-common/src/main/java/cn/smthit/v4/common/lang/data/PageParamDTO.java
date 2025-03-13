@@ -1,13 +1,9 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.common.lang.data;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Bean

@@ -1,10 +1,10 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.framework.beetlsql.exception;
 
+import cn.smthit.v4.common.lang.data.Result;
 import cn.smthit.v4.common.lang.exception.ServiceException;
-import com.baidu.unbiz.fluentvalidator.Result;
 
 import lombok.Getter;
 
@@ -17,7 +17,7 @@ public class ParamException extends ServiceException {
 
 	@Getter
 	private Result result;
-	
+
 	public ParamException(String errorCode, String msg, Throwable exception) {
 		super(errorCode, msg, exception);
 	}

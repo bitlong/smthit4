@@ -83,11 +83,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
         ContentCachingRequestWrapper wrapper = WebUtils.getNativeRequest(request, ContentCachingRequestWrapper.class);
         if (wrapper != null) {
-            try {
-                requestBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());
-            } catch (IOException exp) {
-                // NOOP
-            }
+            requestBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());
         }
 
         return requestBody;
@@ -97,12 +93,8 @@ public class LogInterceptor implements HandlerInterceptor {
 		String responseBody = "";
 		ContentCachingResponseWrapper wrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
 		if (wrapper != null) {
-			try {
-				responseBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());
-			} catch (IOException e) {
-				// NOOP
-			}
-		}
+            responseBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());
+        }
 
 		return responseBody;
 	}

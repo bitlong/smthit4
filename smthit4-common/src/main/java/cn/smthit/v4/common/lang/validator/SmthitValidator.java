@@ -5,9 +5,10 @@ import cn.smthit.v4.common.lang.exception.AssertException;
 import cn.smthit.v4.common.lang.exception.ErrorBuilder;
 import cn.smthit.v4.common.lang.exception.ErrorCode;
 import cn.smthit.v4.common.lang.validator.hibernate.ValidatorKit;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.groups.Default;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.groups.Default;
+
 import java.util.Set;
 
 /**

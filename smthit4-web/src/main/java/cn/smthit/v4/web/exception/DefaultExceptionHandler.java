@@ -7,18 +7,17 @@ import cn.smthit.v4.common.lang.exception.ErrorCode;
 import cn.smthit.v4.common.lang.exception.ServiceException;
 import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
-import com.sun.javafx.binding.StringFormatter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -68,7 +67,7 @@ public abstract class DefaultExceptionHandler {
             String msgDetail = Optional.ofNullable(exp.getDetailMessage()).orElse("数据操作失败,请检查业务逻辑是否正确");
             return outputException(msg, msgDetail, exp.getCode(), throwable, request, response);
         } else {
-            sb.append(StringFormatter.format("未处理异常 (%s)", throwable.getMessage()));
+            sb.append(String.format("未处理异常 (%s)", throwable.getMessage()));
             log.error("未处理异常, 异常信息：" + throwable.getMessage(), throwable);
             return outputException("服务不可用，请查看明细，联系管理员解决", sb.toString(), ErrorCode.DEFAULT_ERROR.getValue(), throwable, request, response);
         }

@@ -3,8 +3,8 @@ package cn.smthit.v4.web.sql;
 import cn.hutool.crypto.SecureUtil;
 
 import cn.smthit.v4.common.lang.sql.SqlInjectKit;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * WEB参数签名和检查

@@ -1,22 +1,23 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.web.log;
 
 import cn.smthit.v4.common.lang.kits.GsonKit;
 import cn.smthit.v4.web.kits.WebKit;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,14 +28,12 @@ import java.util.Map;
  *
  */
 @Slf4j
-public class LogInterceptor extends HandlerInterceptorAdapter {
+public class LogInterceptor implements HandlerInterceptor {
 	private static Logger apiLogger = LoggerFactory.getLogger("web.api.logger");
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		
-		super.afterCompletion(request, response, handler, ex);
 
 		if(WebKit.isAjaxRequest(request) || WebKit.isJsonRequest(request)) {
 			if ((request.getMethod().equals("GET") ||
@@ -78,7 +77,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 	}
-	
+
     private String getRequestBody(HttpServletRequest request) {
         String requestBody = "";
 
@@ -86,11 +85,11 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
         if (wrapper != null) {
             try {
                 requestBody = IOUtils.toString(wrapper.getContentAsByteArray(), wrapper.getCharacterEncoding());
-            } catch (IOException e) {
+            } catch (IOException exp) {
                 // NOOP
             }
         }
-        
+
         return requestBody;
     }
 

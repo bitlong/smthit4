@@ -1,9 +1,8 @@
 package cn.smthit.v4.web.log;
 
 import cn.smthit.v4.common.lang.log.UserInfo;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @description: ...

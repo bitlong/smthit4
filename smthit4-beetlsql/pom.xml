@@ -37,6 +37,17 @@
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
             <version>3.19.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.ibeetl</groupId>
+                    <artifactId>beetl-default-antlr4.9-support</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl-antlr4.13-support</artifactId>
+            <version>3.19.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>cn.smthit.v4</groupId>
@@ -52,7 +63,6 @@
             <groupId>com.github.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
         </dependency>
-
         <!--
         <dependency>
             <groupId>com.baidu.unbiz</groupId>

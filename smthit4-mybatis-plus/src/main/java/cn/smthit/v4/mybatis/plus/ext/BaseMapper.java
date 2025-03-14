@@ -74,8 +74,6 @@ public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.Base
 
     List<Map<String, Object>> selectMaps(@Param("ew") Wrapper<T> queryWrapper);
 
-    List<Object> selectObjs(@Param("ew") Wrapper<T> queryWrapper);
-
     <P extends IPage<T>> P selectPage(P page, @Param("ew") Wrapper<T> queryWrapper);
 
     <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, @Param("ew") Wrapper<T> queryWrapper);

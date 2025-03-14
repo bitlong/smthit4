@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author: Bean
  * @date: 2022/10/12  19:00
  */
-public class UpdateWrapper<T> extends AbstractWrapper<T, String, UpdateWrapper<T>> implements Update<UpdateWrapper<T>, String> {
+public class UpdateWrapper<T> extends AbstractWrapper<T, String, UpdateWrapper<T>>
+        implements Update<UpdateWrapper<T>, String> {
     private final List<String> sqlSet;
 
     public UpdateWrapper(T entity) {
@@ -49,11 +50,25 @@ public class UpdateWrapper<T> extends AbstractWrapper<T, String, UpdateWrapper<T
         });
     }
 
+    @Override
+    public UpdateWrapper<T> setSql(boolean condition, String setSql, Object... params) {
+        throw new UnsupportedOperationException("not support");
+    }
+
+    @Override
+    public UpdateWrapper<T> setIncrBy(boolean condition, String column, Number val) {
+        throw new UnsupportedOperationException("not support");
+    }
+
+    @Override
+    public UpdateWrapper<T> setDecrBy(boolean condition, String column, Number val) {
+        throw new UnsupportedOperationException("not support");
+    }
+
     public UpdateWrapper<T> setSql(boolean condition, String sql) {
         if (condition && StringUtils.isNotBlank(sql)) {
             this.sqlSet.add(sql);
         }
-
         return (UpdateWrapper)this.typedThis;
     }
 

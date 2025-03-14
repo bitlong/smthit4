@@ -53,6 +53,21 @@ public class LambdaUpdateWrapper<T> extends AbstractLambdaWrapper<T, LambdaUpdat
         });
     }
 
+    @Override
+    public LambdaUpdateWrapper<T> setSql(boolean condition, String setSql, Object... params) {
+        throw new UnsupportedOperationException("not support");
+    }
+
+    @Override
+    public LambdaUpdateWrapper<T> setIncrBy(boolean condition, SFunction<T, ?> column, Number val) {
+        throw new UnsupportedOperationException("not support");
+    }
+
+    @Override
+    public LambdaUpdateWrapper<T> setDecrBy(boolean condition, SFunction<T, ?> column, Number val) {
+        throw new UnsupportedOperationException("not support");
+    }
+
     public LambdaUpdateWrapper<T> setSql(boolean condition, String sql) {
         if (condition && StringUtils.isNotBlank(sql)) {
             this.sqlSet.add(sql);

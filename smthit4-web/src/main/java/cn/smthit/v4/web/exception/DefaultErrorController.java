@@ -54,7 +54,7 @@ public class DefaultErrorController implements ErrorController {
             }
         }
 
-        return "/errors/500";
+        return "errors/500";
     }
 
     /**

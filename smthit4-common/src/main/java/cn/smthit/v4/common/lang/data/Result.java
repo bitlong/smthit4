@@ -15,26 +15,22 @@ import java.io.Serializable;
  * @author: Bean
  * @date: 2022/9/16  10:39
  */
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
 public class Result<T> implements Serializable {
-    public static final String OK = "ok";
+    public static final String OK = "200";
     public static final String DEFAULT_ERROR = "500";
 
-    @Getter
     private boolean success;
-    @Getter
     private String code;
-    @Getter
     private String message;
-    @Getter
     private String detailMessage;
 
-    @Getter
     private T data;
 
     public static <T> Result<T> ok() {
-        Result<T> result = new Result();
+        Result<T> result = new Result<>();
 
         result.code = OK;
         result.success = true;
@@ -44,7 +40,7 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> ok(T data) {
-        Result<T> result = new Result();
+        Result<T> result = new Result<>();
 
         result.code = OK;
         result.success = true;
@@ -60,14 +56,14 @@ public class Result<T> implements Serializable {
     }
 
     public static <T>  Result<T> failed() {
-        Result result = new Result();
+        Result<T> result = new Result<>();
         result.code = DEFAULT_ERROR;
         result.message = "Faided";
         return result;
     }
 
     public static <T> Result<T> failed(ServiceException exp) {
-        Result result = new Result();
+        Result<T> result = new Result<>();
         result.success = false;
         result.code = exp.getCode();
         result.message = exp.getMessage();

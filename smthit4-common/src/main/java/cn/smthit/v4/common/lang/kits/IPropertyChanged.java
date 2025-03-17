@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.common.lang.kits;
 
@@ -8,5 +8,5 @@ package cn.smthit.v4.common.lang.kits;
  *
  */
 public interface IPropertyChanged {
-	public boolean onPropertyChanged(String fieldName, Object oldValue, Object newValue);
+	boolean onPropertyChanged(String fieldName, Object oldValue, Object newValue);
 }

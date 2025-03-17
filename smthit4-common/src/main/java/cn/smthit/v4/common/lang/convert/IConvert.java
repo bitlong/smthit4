@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cn.smthit.v4.common.lang.convert;
 
@@ -16,12 +16,11 @@ public interface IConvert<PO, VO> {
 	 * @param po
 	 * @return
 	 */
-	public VO toVO(PO po);
-	
-	public List<VO> toVOs(List<PO> pos);
-	
-	public VO toVO(PO po, IConvertPostHandler<PO, VO> postHandler);
-	
-	public List<VO> toVOs(List<PO> pos, IConvertPostHandler<PO, VO> postHandler);
-		
+	VO toVO(PO po);
+
+	List<VO> toVOs(List<PO> pos);
+
+	VO toVO(PO po, IConvertPostHandler<PO, VO> postHandler);
+
+	List<VO> toVOs(List<PO> pos, IConvertPostHandler<PO, VO> postHandler);
 }

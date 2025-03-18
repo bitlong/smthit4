@@ -41,7 +41,7 @@
 
         <modelmapper.version>3.1.1</modelmapper.version>
         <fastutil.version>8.3.1</fastutil.version>
-        <jsqlparser.version>4.4</jsqlparser.version>
+        <jsqlparser.version>4.7</jsqlparser.version>
         <druid.version>1.2.24</druid.version>
         <commons-io.version>2.18.0</commons-io.version>
         <log4j.version>2.11.2</log4j.version>
